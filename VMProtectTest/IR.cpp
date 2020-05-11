@@ -88,7 +88,7 @@ namespace IR
 	// Variable
 	Variable::Variable(ir_size size) : Expression(expr_variable)
 	{
-		this->m_name = "Temp" + std::to_string(++s_index);
+		this->m_name = "t" + std::to_string(++s_index);
 		this->m_size = size;
 	}
 	Variable::Variable(const std::string &name, ir_size size) : Expression(expr_variable)

@@ -121,14 +121,11 @@ void test_v1()
 	unsigned long long handler_address = analyzer.get_ip();
 	while (handler_address)
 	{
-		std::cout << std::hex << handler_address << std::endl;
+		std::cout << "start analyzing " << std::hex << handler_address << "\n";
 		analyzer.analyze_vm_handler(stream, handler_address);
-		std::cout << std::endl << std::endl << std::endl << std::endl;
+		std::cout << "done.\n\n\n\n";
 		handler_address = analyzer.get_ip();
 	}
-
-	// idk
-	std::cout << std::endl << std::endl;
 	analyzer.print_output();
 }
 void test_demo()

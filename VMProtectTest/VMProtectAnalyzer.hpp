@@ -78,8 +78,9 @@ public:
 	{
 		for (const std::string &s : output_strings)
 		{
-			std::cout << s << std::endl;
+			std::cout << s << "\n";
 		}
+		std::cout << std::endl;
 	}
 
 private:

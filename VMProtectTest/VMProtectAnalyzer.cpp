@@ -429,7 +429,7 @@ void VMProtectAnalyzer::analyze_vm_enter(AbstractStream& stream, unsigned long l
 			for (const auto &pair : triton_instruction.getWrittenRegisters())
 			{
 				const triton::arch::Register &written_register = pair.first;
-				if (written_register.getId() == triton::arch::ID_REG_X86_EFLAGS)
+				if (triton_api->isFlag(written_register))
 				{
 					check_flags = false;
 					break;
@@ -440,13 +440,14 @@ void VMProtectAnalyzer::analyze_vm_enter(AbstractStream& stream, unsigned long l
 		if (++it != basic_block->instructions.end())
 		{
 			// loop until it reaches end
-			std::cout << triton_instruction << std::endl;
+			std::cout << triton_instruction << "\n";
 			continue;
 		}
 
-		if (instruction->get_category() != XED_CATEGORY_UNCOND_BR || instruction->get_branch_displacement_width() == 0)
+		if (instruction->get_category() != XED_CATEGORY_UNCOND_BR 
+			|| instruction->get_branch_displacement_width() == 0)
 		{
-			std::cout << triton_instruction << std::endl;
+			std::cout << triton_instruction << "\n";
 		}
 
 		if (basic_block->next_basic_block && basic_block->target_basic_block)
@@ -551,7 +552,7 @@ void VMProtectAnalyzer::symbolize_memory(const triton::arch::MemoryAccess& mem, 
 
 		triton::engines::symbolic::SharedSymbolicVariable symvar_vmreg = triton_api->symbolizeMemory(mem);
 		context->scratch_variables.insert(std::make_pair(symvar_vmreg->getId(), symvar_vmreg));
-		std::cout << "Load Scratch:[0x" << std::hex << scratch_offset << "]" << std::endl;
+		std::cout << "Load Scratch:[0x" << std::hex << scratch_offset << "]\n";
 
 		// TempVar = VM_REG
 		auto temp_variable = IR::Variable::create_variable(mem.getSize());
@@ -570,7 +571,7 @@ void VMProtectAnalyzer::symbolize_memory(const triton::arch::MemoryAccess& mem, 
 
 		triton::engines::symbolic::SharedSymbolicVariable symvar_arg = triton_api->symbolizeMemory(mem);
 		context->arguments.insert(std::make_pair(symvar_arg->getId(), symvar_arg));
-		std::cout << "Load [EBP+0x" << std::hex << offset << "]" << std::endl;
+		std::cout << "Load [EBP+0x" << std::hex << offset << "\n";
 
 		// test i guess
 		char v[1024];
@@ -595,7 +596,7 @@ void VMProtectAnalyzer::symbolize_memory(const triton::arch::MemoryAccess& mem, 
 		triton::engines::symbolic::SharedSymbolicVariable symvar_source = get_symbolic_var(lea_ast);
 
 		const triton::engines::symbolic::SharedSymbolicVariable symvar = triton_api->symbolizeMemory(mem);
-		std::cout << "Deref(" << lea_ast << "," << segment_register.getName() << ")" << std::endl;
+		std::cout << "Deref(" << lea_ast << "," << segment_register.getName() << ")\n";
 
 		// IR
 		auto it = context->m_expression_map.find(symvar_source->getId());
@@ -890,7 +891,7 @@ void VMProtectAnalyzer::check_store_access(triton::arch::Instruction &triton_ins
 		if (this->is_scratch_area_address(lea_ast, context))
 		{
 			const triton::uint64 scratch_offset = lea_ast->evaluate().convert_to<triton::uint64>() - context->x86_sp;
-			std::cout << "modifies [x86_sp + 0x" << std::hex << scratch_offset << "]" << std::endl;
+			std::cout << "modifies [x86_sp + 0x" << std::hex << scratch_offset << "]\n";
 
 			// create IR (VM_REG = mem_ast)
 			auto source_node = triton_api->processSimplification(mem_ast, true);
@@ -1140,7 +1141,7 @@ void VMProtectAnalyzer::analyze_vm_handler(AbstractStream& stream, unsigned long
 		if (xed_instruction->get_category() != XED_CATEGORY_UNCOND_BR
 			|| xed_instruction->get_branch_displacement_width() == 0)
 		{
-			std::cout << "\t" << triton_instruction << std::endl;
+			std::cout << "\t" << triton_instruction << "\n";
 		}
 
 		// symbolize eflags
@@ -1268,13 +1269,13 @@ void VMProtectAnalyzer::analyze_vm_exit(unsigned long long handler_address)
 		if (++it != basic_block->instructions.end())
 		{
 			// loop until it reaches end
-			std::cout << triton_instruction << std::endl;
+			std::cout << triton_instruction << "\n";
 			continue;
 		}
 
 		if (!instruction->is_branch())
 		{
-			std::cout << triton_instruction << std::endl;
+			std::cout << triton_instruction << "\n";
 		}
 
 		if (basic_block->next_basic_block && basic_block->target_basic_block)
@@ -1341,7 +1342,7 @@ void VMProtectAnalyzer::categorize_handler(VMPHandlerContext *context)
 	const triton::uint64 sp = this->get_sp();
 	const triton::uint64 stack = this->get_bp();
 
-	std::cout << "handlers outputs:" << std::endl;
+	std::cout << "handlers outputs:\n";
 	printf("\tbytecode: 0x%016llX -> 0x%016llX\n", context->bytecode, bytecode);
 	printf("\tsp: 0x%016llX -> 0x%016llX\n", context->x86_sp, sp);
 	printf("\tstack: 0x%016llX -> 0x%016llX\n", context->stack, stack);
@@ -1457,6 +1458,9 @@ void VMProtectAnalyzer::categorize_handler(VMPHandlerContext *context)
 		}
 	}
 
+	std::stringstream ss_label;
+	ss_label << std::hex << context->bytecode << ":";
+	output_strings.push_back(ss_label.str());
 	for (const std::shared_ptr<IR::Statement> &expr : context->m_statements)
 	{
 		std::stringstream ss;

@@ -211,6 +211,33 @@ public:
 		xed_decoded_inst_set_immediate_unsigned_bits(this, x, length_bits);
 	}
 
+	// encoder
+	inline void init_from_decode()
+	{
+		xed_encoder_request_init_from_decode(this);
+	}
+	inline void set_iclass(xed_iclass_enum_t iclass)
+	{
+		xed_encoder_request_set_iclass(this, iclass);
+	}
+	inline void set_operand_order(xed_uint_t i, xed_operand_enum_t name)
+	{
+		xed_encoder_request_set_operand_order(this, i, name);
+	}
+	inline void set_uimm0(xed_uint64_t uimm, xed_uint_t nbytes)
+	{
+		xed_encoder_request_set_uimm0(this, uimm, nbytes);
+	}
+	inline void encode()
+	{
+		unsigned int olen;
+		unsigned char buf[16];
+		if (xed_encode(this, buf, 16, &olen) != XED_ERROR_NONE)
+			throw std::runtime_error("xed encode failed");
+
+		this->decode(buf, olen, XED_MACHINE_MODE_LEGACY_32);
+	}
+
 	// flags
 	inline xed_bool_t uses_rflags() const
 	{
