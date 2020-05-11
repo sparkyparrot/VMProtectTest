@@ -1,4 +1,4 @@
-pid: 00001D68
+pid: 00004524
 basic block ends with ret
 0x4869bb: push 0x9486cfea
 0x4869c0: call 0x481348
@@ -10,20 +10,11 @@ basic block ends with ret
 0x41f640: push ebx
 0x41f644: push edx
 0x41f64d: push esi
-0x41f656: mov eax, 0
-0x41f661: push eax
-0x41f662: mov esi, dword ptr [esp + 0x28]
-0x41f666: add esi, 0x55106798
-0x41f66c: neg esi
-0x41f671: add esi, 0x69733a52
-0x41f67b: rol esi, 1
-0x41f683: not esi
-0x41f68a: add esi, eax
+0x41f661: push 0
+0x41f68a: mov esi, 0x47fa5f
 0x41f68f: mov ebp, esp
 0x41f69a: sub esp, 0xc0
-0x453e79: mov ebx, esi
-0x453e86: mov eax, 0
-0x4620dd: sub ebx, eax
+0x4620dd: mov ebx, 0x47fa5f
 0x4620e6: lea edi, [0x4620e6]
 0x4620ec: mov eax, dword ptr [esi]
 0x4620f2: lea esi, [esi + 4]
@@ -37,7 +28,7 @@ basic block ends with ret
 0x4323ff: push edi
 0x432400: ret
 scratch_size: 0x00000000000000C0, scratch_length: 48
-4892af
+start analyzing 4892af
 basic block ends with indirect unconditional branch
         0x4892af: movzx eax, byte ptr [esi]
         0x4892b8: lea esi, [esi + 1]
@@ -47,7 +38,7 @@ basic block ends with indirect unconditional branch
         0x4892d1: neg al
         0x4892df: not al
         0x4892ea: xor bl, al
-Load [EBP+0x0]
+Load [EBP+0x0
         0x4892ef: mov ecx, dword ptr [ebp]
         0x41a261: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x2c]
@@ -66,11 +57,11 @@ handlers outputs:
         bytecode: 0x000000000047FA63 -> 0x000000000047FA68
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001004
+done.
 
 
 
-
-493fb7
+start analyzing 493fb7
 basic block ends with ret
         0x493fb7: movzx eax, byte ptr [esi]
         0x493fba: add esi, 1
@@ -80,7 +71,7 @@ basic block ends with ret
         0x493fdf: neg al
         0x493fea: not al
         0x493ff2: xor bl, al
-Load [EBP+0x0]
+Load [EBP+0x0
         0x493ff9: mov ecx, dword ptr [ebp]
         0x494004: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x28]
@@ -100,11 +91,11 @@ handlers outputs:
         bytecode: 0x000000000047FA68 -> 0x000000000047FA6D
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001004
+done.
 
 
 
-
-43cebf
+start analyzing 43cebf
 basic block ends with indirect unconditional branch
         0x43cebf: movzx eax, byte ptr [esi]
         0x43cec8: lea esi, [esi + 1]
@@ -114,7 +105,7 @@ basic block ends with indirect unconditional branch
         0x43cee0: neg al
         0x43cee6: not al
         0x43ceed: xor bl, al
-Load [EBP+0x0]
+Load [EBP+0x0
         0x43cef1: mov ecx, dword ptr [ebp]
         0x43cef6: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x20]
@@ -133,11 +124,11 @@ handlers outputs:
         bytecode: 0x000000000047FA6D -> 0x000000000047FA72
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001004
+done.
 
 
 
-
-42eda2
+start analyzing 42eda2
 basic block ends with indirect unconditional branch
         0x42eda2: movzx eax, byte ptr [esi]
         0x42edaf: add esi, 1
@@ -147,7 +138,7 @@ basic block ends with indirect unconditional branch
         0x42edcd: neg al
         0x42edd6: not al
         0x42ede2: xor bl, al
-Load [EBP+0x0]
+Load [EBP+0x0
         0x42eded: mov ecx, dword ptr [ebp]
         0x42edf1: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x30]
@@ -166,11 +157,11 @@ handlers outputs:
         bytecode: 0x000000000047FA72 -> 0x000000000047FA77
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001004
+done.
 
 
 
-
-43cc41
+start analyzing 43cc41
 basic block ends with ret
         0x43cc41: movzx eax, byte ptr [esi]
         0x43cc4c: add esi, 1
@@ -180,7 +171,7 @@ basic block ends with ret
         0x43cc60: neg al
         0x43cc65: not al
         0x43cc71: xor bl, al
-Load [EBP+0x0]
+Load [EBP+0x0
         0x43cc7b: mov ecx, dword ptr [ebp]
         0x43cc83: add ebp, 4
 modifies [x86_sp + 0x14]
@@ -200,11 +191,11 @@ handlers outputs:
         bytecode: 0x000000000047FA77 -> 0x000000000047FA7C
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001004
+done.
 
 
 
-
-432085
+start analyzing 432085
 basic block ends with ret
         0x432085: movzx eax, byte ptr [esi]
         0x43208c: add esi, 1
@@ -214,7 +205,7 @@ basic block ends with ret
         0x4320a2: neg al
         0x4320aa: not al
         0x4320b4: xor bl, al
-Load [EBP+0x0]
+Load [EBP+0x0
         0x4320b6: mov ecx, dword ptr [ebp]
         0x4320bf: add ebp, 4
 modifies [x86_sp + 0xc]
@@ -234,11 +225,11 @@ handlers outputs:
         bytecode: 0x000000000047FA7C -> 0x000000000047FA81
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001004
+done.
 
 
 
-
-43285a
+start analyzing 43285a
 basic block ends with indirect unconditional branch
         0x43285a: movzx eax, byte ptr [esi]
         0x432866: lea esi, [esi + 1]
@@ -248,7 +239,7 @@ basic block ends with indirect unconditional branch
         0x485af3: neg al
         0x485af5: not al
         0x485af8: xor bl, al
-Load [EBP+0x0]
+Load [EBP+0x0
         0x485afa: mov ecx, dword ptr [ebp]
         0x485b01: add ebp, 4
 modifies [x86_sp + 0x10]
@@ -267,11 +258,11 @@ handlers outputs:
         bytecode: 0x000000000047FA81 -> 0x000000000047FA86
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001004
+done.
 
 
 
-
-472114
+start analyzing 472114
 basic block ends with ret
         0x472114: movzx eax, byte ptr [esi]
         0x472118: lea esi, [esi + 1]
@@ -281,7 +272,7 @@ basic block ends with ret
         0x47213a: neg al
         0x47213e: not al
         0x47214c: xor bl, al
-Load [EBP+0x0]
+Load [EBP+0x0
         0x472151: mov ecx, dword ptr [ebp]
         0x480797: add ebp, 4
 modifies [x86_sp + 0x0]
@@ -301,11 +292,11 @@ handlers outputs:
         bytecode: 0x000000000047FA86 -> 0x000000000047FA8B
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001004
+done.
 
 
 
-
-44efa7
+start analyzing 44efa7
 basic block ends with indirect unconditional branch
         0x44efa7: movzx eax, byte ptr [esi]
         0x44efae: add esi, 1
@@ -315,7 +306,7 @@ basic block ends with indirect unconditional branch
         0x430e13: neg al
         0x430e1a: not al
         0x430e21: xor bl, al
-Load [EBP+0x0]
+Load [EBP+0x0
         0x430e29: mov ecx, dword ptr [ebp]
         0x430e2d: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x4]
@@ -334,11 +325,11 @@ handlers outputs:
         bytecode: 0x000000000047FA8B -> 0x000000000047FA90
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001004
+done.
 
 
 
-
-47b865
+start analyzing 47b865
 basic block ends with ret
         0x47b865: movzx eax, byte ptr [esi]
         0x47b868: lea esi, [esi + 1]
@@ -348,7 +339,7 @@ basic block ends with ret
         0x47b891: neg al
         0x47b89a: not al
         0x47b8a3: xor bl, al
-Load [EBP+0x0]
+Load [EBP+0x0
         0x47b8a9: mov ecx, dword ptr [ebp]
         0x47b8ad: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x34]
@@ -368,11 +359,11 @@ handlers outputs:
         bytecode: 0x000000000047FA90 -> 0x000000000047FA95
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001004
+done.
 
 
 
-
-44489f
+start analyzing 44489f
 basic block ends with ret
         0x44489f: movzx eax, byte ptr [esi]
         0x4448a2: add esi, 1
@@ -382,7 +373,7 @@ basic block ends with ret
         0x44c956: neg al
         0x44c95d: not al
         0x44c963: xor bl, al
-Load [EBP+0x0]
+Load [EBP+0x0
         0x44c96d: mov ecx, dword ptr [ebp]
         0x459689: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x34]
@@ -402,11 +393,11 @@ handlers outputs:
         bytecode: 0x000000000047FA95 -> 0x000000000047FA9A
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001004
+done.
 
 
 
-
-441cf6
+start analyzing 441cf6
 basic block ends with indirect unconditional branch
 basic block ends with indirect unconditional branch
         0x441cf6: movzx eax, byte ptr [esi]
@@ -438,11 +429,11 @@ handlers outputs:
         bytecode: 0x000000000047FA9A -> 0x000000000047FA9F
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000000FFC
+done.
 
 
 
-
-468429
+start analyzing 468429
 basic block ends with indirect unconditional branch
 basic block ends with indirect unconditional branch
         0x468429: mov eax, ebp
@@ -465,11 +456,11 @@ handlers outputs:
         bytecode: 0x000000000047FA9F -> 0x000000000047FAA3
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000000FFC
+done.
 
 
 
-
-4892af
+start analyzing 4892af
         0x4892af: movzx eax, byte ptr [esi]
         0x4892b8: lea esi, [esi + 1]
         0x4892be: xor al, bl
@@ -478,7 +469,7 @@ handlers outputs:
         0x4892d1: neg al
         0x4892df: not al
         0x4892ea: xor bl, al
-Load [EBP+0x0]
+Load [EBP+0x0
         0x4892ef: mov ecx, dword ptr [ebp]
         0x41a261: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x18]
@@ -497,11 +488,11 @@ handlers outputs:
         bytecode: 0x000000000047FAA3 -> 0x000000000047FAA8
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001004
+done.
 
 
 
-
-49b6fa
+start analyzing 49b6fa
 basic block ends with indirect unconditional branch
 basic block ends with indirect unconditional branch
         0x49b6fa: mov eax, dword ptr [esi]
@@ -532,11 +523,11 @@ handlers outputs:
         bytecode: 0x000000000047FAA8 -> 0x000000000047FAB0
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000000FFC
+done.
 
 
 
-
-430855
+start analyzing 430855
 basic block ends with indirect unconditional branch
 basic block ends with indirect unconditional branch
         0x430855: mov eax, ebp
@@ -559,11 +550,11 @@ handlers outputs:
         bytecode: 0x000000000047FAB0 -> 0x000000000047FAB4
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000000FFC
+done.
 
 
 
-
-42ae29
+start analyzing 42ae29
 basic block ends with indirect unconditional branch
 basic block ends with indirect unconditional branch
         0x42ae29: mov eax, dword ptr [esi]
@@ -594,15 +585,15 @@ handlers outputs:
         bytecode: 0x000000000047FAB4 -> 0x000000000047FABC
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000000FFC
+done.
 
 
 
-
-4365af
+start analyzing 4365af
 basic block ends with ret
-Load [EBP+0x0]
+Load [EBP+0x0
         0x4365af: mov eax, dword ptr [ebp]
-Load [EBP+0x4]
+Load [EBP+0x4
         0x4365c0: mov ecx, dword ptr [ebp + 4]
         0x4365ca: add eax, ecx
         0x4365cc: mov dword ptr [ebp + 4], eax
@@ -623,11 +614,11 @@ handlers outputs:
         bytecode: 0x000000000047FABC -> 0x000000000047FAC0
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001000
+done.
 
 
 
-
-493fb7
+start analyzing 493fb7
         0x493fb7: movzx eax, byte ptr [esi]
         0x493fba: add esi, 1
         0x493fc8: xor al, bl
@@ -636,7 +627,7 @@ handlers outputs:
         0x493fdf: neg al
         0x493fea: not al
         0x493ff2: xor bl, al
-Load [EBP+0x0]
+Load [EBP+0x0
         0x493ff9: mov ecx, dword ptr [ebp]
         0x494004: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x38]
@@ -656,11 +647,11 @@ handlers outputs:
         bytecode: 0x000000000047FAC0 -> 0x000000000047FAC5
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001004
+done.
 
 
 
-
-46e225
+start analyzing 46e225
 basic block ends with indirect unconditional branch
 basic block ends with indirect unconditional branch
         0x46e225: mov eax, ebp
@@ -683,11 +674,11 @@ handlers outputs:
         bytecode: 0x000000000047FAC5 -> 0x000000000047FAC9
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000000FFC
+done.
 
 
 
-
-4762b1
+start analyzing 4762b1
 basic block ends with indirect unconditional branch
 basic block ends with indirect unconditional branch
         0x4762b1: mov eax, dword ptr [esi]
@@ -718,15 +709,15 @@ handlers outputs:
         bytecode: 0x000000000047FAC9 -> 0x000000000047FAD1
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000000FFC
+done.
 
 
 
-
-423f22
+start analyzing 423f22
 basic block ends with indirect unconditional branch
-Load [EBP+0x0]
+Load [EBP+0x0
         0x423f22: mov eax, dword ptr [ebp]
-Load [EBP+0x4]
+Load [EBP+0x4
         0x423f26: mov ecx, dword ptr [ebp + 4]
         0x423f30: add eax, ecx
         0x45fb92: mov dword ptr [ebp + 4], eax
@@ -746,11 +737,11 @@ handlers outputs:
         bytecode: 0x000000000047FAD1 -> 0x000000000047FAD5
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001000
+done.
 
 
 
-
-43cebf
+start analyzing 43cebf
         0x43cebf: movzx eax, byte ptr [esi]
         0x43cec8: lea esi, [esi + 1]
         0x43ced5: xor al, bl
@@ -759,7 +750,7 @@ handlers outputs:
         0x43cee0: neg al
         0x43cee6: not al
         0x43ceed: xor bl, al
-Load [EBP+0x0]
+Load [EBP+0x0
         0x43cef1: mov ecx, dword ptr [ebp]
         0x43cef6: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x38]
@@ -778,15 +769,15 @@ handlers outputs:
         bytecode: 0x000000000047FAD5 -> 0x000000000047FADA
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001004
+done.
 
 
 
-
-463fb4
+start analyzing 463fb4
 basic block ends with indirect unconditional branch
-Load [EBP+0x0]
+Load [EBP+0x0
         0x463fb4: mov eax, dword ptr [ebp]
-Load [EBP+0x4]
+Load [EBP+0x4
         0x463fbf: mov ecx, dword ptr [ebp + 4]
         0x463fc8: not eax
         0x463fca: not ecx
@@ -808,11 +799,11 @@ handlers outputs:
         bytecode: 0x000000000047FADA -> 0x000000000047FADE
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001000
+done.
 
 
 
-
-42eda2
+start analyzing 42eda2
         0x42eda2: movzx eax, byte ptr [esi]
         0x42edaf: add esi, 1
         0x42edb9: xor al, bl
@@ -821,7 +812,7 @@ handlers outputs:
         0x42edcd: neg al
         0x42edd6: not al
         0x42ede2: xor bl, al
-Load [EBP+0x0]
+Load [EBP+0x0
         0x42eded: mov ecx, dword ptr [ebp]
         0x42edf1: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x24]
@@ -840,15 +831,15 @@ handlers outputs:
         bytecode: 0x000000000047FADE -> 0x000000000047FAE3
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001004
+done.
 
 
 
-
-496c89
+start analyzing 496c89
 basic block ends with indirect unconditional branch
-Load [EBP+0x0]
+Load [EBP+0x0
         0x496c89: mov eax, dword ptr [ebp]
-Load [EBP+0x4]
+Load [EBP+0x4
         0x496c8d: mov ecx, dword ptr [ebp + 4]
         0x496c9a: add eax, ecx
         0x46be0f: mov dword ptr [ebp + 4], eax
@@ -868,11 +859,11 @@ handlers outputs:
         bytecode: 0x000000000047FAE3 -> 0x000000000047FAE7
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001000
+done.
 
 
 
-
-43cc41
+start analyzing 43cc41
         0x43cc41: movzx eax, byte ptr [esi]
         0x43cc4c: add esi, 1
         0x43cc56: xor al, bl
@@ -881,7 +872,7 @@ handlers outputs:
         0x43cc60: neg al
         0x43cc65: not al
         0x43cc71: xor bl, al
-Load [EBP+0x0]
+Load [EBP+0x0
         0x43cc7b: mov ecx, dword ptr [ebp]
         0x43cc83: add ebp, 4
 modifies [x86_sp + 0x24]
@@ -901,11 +892,11 @@ handlers outputs:
         bytecode: 0x000000000047FAE7 -> 0x000000000047FAEC
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001004
+done.
 
 
 
-
-45b420
+start analyzing 45b420
 basic block ends with indirect unconditional branch
 basic block ends with indirect unconditional branch
         0x45b420: mov eax, ebp
@@ -928,15 +919,15 @@ handlers outputs:
         bytecode: 0x000000000047FAEC -> 0x000000000047FAF0
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000000FFC
+done.
 
 
 
-
-4451ce
+start analyzing 4451ce
 basic block ends with ret
-Load [EBP+0x0]
+Load [EBP+0x0
         0x4451ce: mov ecx, dword ptr [ebp]
-Deref(Temp32,ss)
+Deref(t32,ss)
         0x4451d9: mov eax, dword ptr ss:[ecx]
         0x4451e2: mov dword ptr [ebp], eax
         0x4451eb: mov eax, dword ptr [esi]
@@ -954,15 +945,15 @@ handlers outputs:
         bytecode: 0x000000000047FAF0 -> 0x000000000047FAF4
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001000
+done.
 
 
 
-
-47e3ff
+start analyzing 47e3ff
 basic block ends with ret
-Load [EBP+0x0]
+Load [EBP+0x0
         0x47e3ff: mov eax, dword ptr [ebp]
-Load [EBP+0x4]
+Load [EBP+0x4
         0x47e403: mov ecx, dword ptr [ebp + 4]
         0x47e40b: not eax
         0x45700b: not ecx
@@ -985,11 +976,11 @@ handlers outputs:
         bytecode: 0x000000000047FAF4 -> 0x000000000047FAF8
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001000
+done.
 
 
 
-
-432085
+start analyzing 432085
         0x432085: movzx eax, byte ptr [esi]
         0x43208c: add esi, 1
         0x432096: xor al, bl
@@ -998,7 +989,7 @@ handlers outputs:
         0x4320a2: neg al
         0x4320aa: not al
         0x4320b4: xor bl, al
-Load [EBP+0x0]
+Load [EBP+0x0
         0x4320b6: mov ecx, dword ptr [ebp]
         0x4320bf: add ebp, 4
 modifies [x86_sp + 0x8]
@@ -1018,14 +1009,14 @@ handlers outputs:
         bytecode: 0x000000000047FAF8 -> 0x000000000047FAFD
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001004
+done.
 
 
 
-
-49879b
+start analyzing 49879b
 basic block ends with indirect unconditional branch
 basic block ends with indirect unconditional branch
-Load [EBP+0x0]
+Load [EBP+0x0
         0x49879b: mov ebp, dword ptr [ebp]
         0x4987a9: mov eax, dword ptr [esi]
         0x44e529: add esi, 4
@@ -1044,11 +1035,11 @@ handlers outputs:
         bytecode: 0x000000000047FAFD -> 0x000000000047FB01
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001000
+done.
 
 
 
-
-437794
+start analyzing 437794
 basic block ends with indirect unconditional branch
 basic block ends with indirect unconditional branch
         0x437794: movzx eax, byte ptr [esi]
@@ -1080,11 +1071,11 @@ handlers outputs:
         bytecode: 0x000000000047FB01 -> 0x000000000047FB06
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000000FFC
+done.
 
 
 
-
-438038
+start analyzing 438038
 basic block ends with indirect unconditional branch
 basic block ends with indirect unconditional branch
         0x438038: movzx eax, byte ptr [esi]
@@ -1116,15 +1107,15 @@ handlers outputs:
         bytecode: 0x000000000047FB06 -> 0x000000000047FB0B
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000000FFC
+done.
 
 
 
-
-487b17
+start analyzing 487b17
 basic block ends with ret
-Load [EBP+0x0]
+Load [EBP+0x0
         0x487b17: mov eax, dword ptr [ebp]
-Load [EBP+0x4]
+Load [EBP+0x4
         0x487b1b: mov ecx, dword ptr [ebp + 4]
         0x487b21: not eax
         0x460771: not ecx
@@ -1147,11 +1138,11 @@ handlers outputs:
         bytecode: 0x000000000047FB0B -> 0x000000000047FB0F
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001000
+done.
 
 
 
-
-43285a
+start analyzing 43285a
         0x43285a: movzx eax, byte ptr [esi]
         0x432866: lea esi, [esi + 1]
         0x432875: xor al, bl
@@ -1160,7 +1151,7 @@ handlers outputs:
         0x485af3: neg al
         0x485af5: not al
         0x485af8: xor bl, al
-Load [EBP+0x0]
+Load [EBP+0x0
         0x485afa: mov ecx, dword ptr [ebp]
         0x485b01: add ebp, 4
 modifies [x86_sp + 0x38]
@@ -1179,11 +1170,11 @@ handlers outputs:
         bytecode: 0x000000000047FB0F -> 0x000000000047FB14
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001004
+done.
 
 
 
-
-49afdf
+start analyzing 49afdf
 basic block ends with indirect unconditional branch
 basic block ends with indirect unconditional branch
         0x49afdf: mov eax, dword ptr [esi]
@@ -1214,15 +1205,15 @@ handlers outputs:
         bytecode: 0x000000000047FB14 -> 0x000000000047FB1C
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000000FFC
+done.
 
 
 
-
-45c2f6
+start analyzing 45c2f6
 basic block ends with ret
-Load [EBP+0x0]
+Load [EBP+0x0
         0x45c2f6: mov eax, dword ptr [ebp]
-Load [EBP+0x4]
+Load [EBP+0x4
         0x45c2fa: mov ecx, dword ptr [ebp + 4]
         0x45c304: not eax
         0x45c306: not ecx
@@ -1245,11 +1236,11 @@ handlers outputs:
         bytecode: 0x000000000047FB1C -> 0x000000000047FB20
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001000
+done.
 
 
 
-
-472114
+start analyzing 472114
         0x472114: movzx eax, byte ptr [esi]
         0x472118: lea esi, [esi + 1]
         0x472123: xor al, bl
@@ -1258,7 +1249,7 @@ handlers outputs:
         0x47213a: neg al
         0x47213e: not al
         0x47214c: xor bl, al
-Load [EBP+0x0]
+Load [EBP+0x0
         0x472151: mov ecx, dword ptr [ebp]
         0x480797: add ebp, 4
 modifies [x86_sp + 0x1c]
@@ -1278,11 +1269,11 @@ handlers outputs:
         bytecode: 0x000000000047FB20 -> 0x000000000047FB25
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001004
+done.
 
 
 
-
-43fc2a
+start analyzing 43fc2a
 basic block ends with indirect unconditional branch
 basic block ends with indirect unconditional branch
         0x43fc2a: movzx eax, byte ptr [esi]
@@ -1314,11 +1305,11 @@ handlers outputs:
         bytecode: 0x000000000047FB25 -> 0x000000000047FB2A
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000000FFC
+done.
 
 
 
-
-45b7ef
+start analyzing 45b7ef
 basic block ends with indirect unconditional branch
 basic block ends with indirect unconditional branch
         0x45b7ef: movzx eax, byte ptr [esi]
@@ -1350,15 +1341,15 @@ handlers outputs:
         bytecode: 0x000000000047FB2A -> 0x000000000047FB2F
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000000FFC
+done.
 
 
 
-
-43c7e5
+start analyzing 43c7e5
 basic block ends with ret
-Load [EBP+0x0]
+Load [EBP+0x0
         0x43c7e5: mov eax, dword ptr [ebp]
-Load [EBP+0x4]
+Load [EBP+0x4
         0x43c7eb: mov ecx, dword ptr [ebp + 4]
         0x43c7f3: not eax
         0x43c7f5: not ecx
@@ -1381,11 +1372,11 @@ handlers outputs:
         bytecode: 0x000000000047FB2F -> 0x000000000047FB33
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001000
+done.
 
 
 
-
-44efa7
+start analyzing 44efa7
         0x44efa7: movzx eax, byte ptr [esi]
         0x44efae: add esi, 1
         0x430dfd: xor al, bl
@@ -1394,7 +1385,7 @@ handlers outputs:
         0x430e13: neg al
         0x430e1a: not al
         0x430e21: xor bl, al
-Load [EBP+0x0]
+Load [EBP+0x0
         0x430e29: mov ecx, dword ptr [ebp]
         0x430e2d: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x38]
@@ -1413,11 +1404,11 @@ handlers outputs:
         bytecode: 0x000000000047FB33 -> 0x000000000047FB38
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001004
+done.
 
 
 
-
-441472
+start analyzing 441472
 basic block ends with indirect unconditional branch
 basic block ends with indirect unconditional branch
         0x441472: mov eax, dword ptr [esi]
@@ -1448,15 +1439,15 @@ handlers outputs:
         bytecode: 0x000000000047FB38 -> 0x000000000047FB40
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000000FFC
+done.
 
 
 
-
-44c4d5
+start analyzing 44c4d5
 basic block ends with ret
-Load [EBP+0x0]
+Load [EBP+0x0
         0x44c4d5: mov eax, dword ptr [ebp]
-Load [EBP+0x4]
+Load [EBP+0x4
         0x44c4db: mov ecx, dword ptr [ebp + 4]
         0x44c4e0: not eax
         0x44c4e2: not ecx
@@ -1479,11 +1470,11 @@ handlers outputs:
         bytecode: 0x000000000047FB40 -> 0x000000000047FB44
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001000
+done.
 
 
 
-
-47b865
+start analyzing 47b865
         0x47b865: movzx eax, byte ptr [esi]
         0x47b868: lea esi, [esi + 1]
         0x47b87a: xor al, bl
@@ -1492,7 +1483,7 @@ handlers outputs:
         0x47b891: neg al
         0x47b89a: not al
         0x47b8a3: xor bl, al
-Load [EBP+0x0]
+Load [EBP+0x0
         0x47b8a9: mov ecx, dword ptr [ebp]
         0x47b8ad: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x1c]
@@ -1512,15 +1503,15 @@ handlers outputs:
         bytecode: 0x000000000047FB44 -> 0x000000000047FB49
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001004
+done.
 
 
 
-
-42e0d5
+start analyzing 42e0d5
 basic block ends with indirect unconditional branch
-Load [EBP+0x0]
+Load [EBP+0x0
         0x42e0d5: mov eax, dword ptr [ebp]
-Load [EBP+0x4]
+Load [EBP+0x4
         0x42e0de: mov ecx, dword ptr [ebp + 4]
         0x42e0e4: add eax, ecx
         0x43ad11: mov dword ptr [ebp + 4], eax
@@ -1540,11 +1531,11 @@ handlers outputs:
         bytecode: 0x000000000047FB49 -> 0x000000000047FB4D
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001000
+done.
 
 
 
-
-44489f
+start analyzing 44489f
         0x44489f: movzx eax, byte ptr [esi]
         0x4448a2: add esi, 1
         0x4448a8: xor al, bl
@@ -1553,7 +1544,7 @@ handlers outputs:
         0x44c956: neg al
         0x44c95d: not al
         0x44c963: xor bl, al
-Load [EBP+0x0]
+Load [EBP+0x0
         0x44c96d: mov ecx, dword ptr [ebp]
         0x459689: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x3c]
@@ -1573,11 +1564,11 @@ handlers outputs:
         bytecode: 0x000000000047FB4D -> 0x000000000047FB52
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001004
+done.
 
 
 
-
-4892af
+start analyzing 4892af
         0x4892af: movzx eax, byte ptr [esi]
         0x4892b8: lea esi, [esi + 1]
         0x4892be: xor al, bl
@@ -1586,7 +1577,7 @@ handlers outputs:
         0x4892d1: neg al
         0x4892df: not al
         0x4892ea: xor bl, al
-Load [EBP+0x0]
+Load [EBP+0x0
         0x4892ef: mov ecx, dword ptr [ebp]
         0x41a261: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x14]
@@ -1605,11 +1596,11 @@ handlers outputs:
         bytecode: 0x000000000047FB52 -> 0x000000000047FB57
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001004
+done.
 
 
 
-
-4786ff
+start analyzing 4786ff
 basic block ends with indirect unconditional branch
 basic block ends with indirect unconditional branch
         0x4786ff: movzx eax, byte ptr [esi]
@@ -1641,11 +1632,11 @@ handlers outputs:
         bytecode: 0x000000000047FB57 -> 0x000000000047FB5C
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000000FFC
+done.
 
 
 
-
-43a136
+start analyzing 43a136
 basic block ends with indirect unconditional branch
 basic block ends with indirect unconditional branch
         0x43a136: mov eax, dword ptr [esi]
@@ -1676,11 +1667,11 @@ handlers outputs:
         bytecode: 0x000000000047FB5C -> 0x000000000047FB64
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000000FFC
+done.
 
 
 
-
-45b707
+start analyzing 45b707
 basic block ends with indirect unconditional branch
 basic block ends with indirect unconditional branch
         0x45b707: movzx eax, byte ptr [esi]
@@ -1712,15 +1703,15 @@ handlers outputs:
         bytecode: 0x000000000047FB64 -> 0x000000000047FB69
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000000FFC
+done.
 
 
 
-
-49af2e
+start analyzing 49af2e
 basic block ends with ret
-Load [EBP+0x0]
+Load [EBP+0x0
         0x49af2e: mov eax, dword ptr [ebp]
-Load [EBP+0x4]
+Load [EBP+0x4
         0x49af36: mov ecx, dword ptr [ebp + 4]
         0x49af3a: add eax, ecx
         0x481a8f: mov dword ptr [ebp + 4], eax
@@ -1741,11 +1732,11 @@ handlers outputs:
         bytecode: 0x000000000047FB69 -> 0x000000000047FB6D
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001000
+done.
 
 
 
-
-493fb7
+start analyzing 493fb7
         0x493fb7: movzx eax, byte ptr [esi]
         0x493fba: add esi, 1
         0x493fc8: xor al, bl
@@ -1754,7 +1745,7 @@ handlers outputs:
         0x493fdf: neg al
         0x493fea: not al
         0x493ff2: xor bl, al
-Load [EBP+0x0]
+Load [EBP+0x0
         0x493ff9: mov ecx, dword ptr [ebp]
         0x494004: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x38]
@@ -1774,11 +1765,11 @@ handlers outputs:
         bytecode: 0x000000000047FB6D -> 0x000000000047FB72
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001004
+done.
 
 
 
-
-475039
+start analyzing 475039
 basic block ends with indirect unconditional branch
 basic block ends with indirect unconditional branch
         0x475039: mov eax, dword ptr [esi]
@@ -1809,15 +1800,15 @@ handlers outputs:
         bytecode: 0x000000000047FB72 -> 0x000000000047FB7A
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000000FFC
+done.
 
 
 
-
-480201
+start analyzing 480201
 basic block ends with indirect unconditional branch
-Load [EBP+0x0]
+Load [EBP+0x0
         0x480201: mov ecx, dword ptr [ebp]
-Deref(Temp81,unknown)
+Deref(t81,unknown)
         0x480205: mov eax, dword ptr [ecx]
         0x48020d: mov dword ptr [ebp], eax
         0x480214: mov eax, dword ptr [esi]
@@ -1834,11 +1825,11 @@ handlers outputs:
         bytecode: 0x000000000047FB7A -> 0x000000000047FB7E
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000001000
+done.
 
 
 
-
-41d8ad
+start analyzing 41d8ad
 basic block ends with indirect unconditional branch
 basic block ends with indirect unconditional branch
         0x41d8ad: movzx eax, byte ptr [esi]
@@ -1870,11 +1861,11 @@ handlers outputs:
         bytecode: 0x000000000047FB7E -> 0x000000000047FB83
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000000FFC
+done.
 
 
 
-
-49734a
+start analyzing 49734a
 basic block ends with indirect unconditional branch
 basic block ends with indirect unconditional branch
         0x49734a: movzx eax, byte ptr [esi]
@@ -1906,11 +1897,11 @@ handlers outputs:
         bytecode: 0x000000000047FB83 -> 0x000000000047FB88
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000000FFC
+done.
 
 
 
-
-44fa7a
+start analyzing 44fa7a
 basic block ends with indirect unconditional branch
 basic block ends with indirect unconditional branch
         0x44fa7a: movzx eax, byte ptr [esi]
@@ -1942,11 +1933,11 @@ handlers outputs:
         bytecode: 0x000000000047FB88 -> 0x000000000047FB8D
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000000FFC
+done.
 
 
 
-
-45f457
+start analyzing 45f457
 basic block ends with indirect unconditional branch
 basic block ends with indirect unconditional branch
         0x45f457: movzx eax, byte ptr [esi]
@@ -1978,11 +1969,11 @@ handlers outputs:
         bytecode: 0x000000000047FB8D -> 0x000000000047FB92
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000000FFC
+done.
 
 
 
-
-441cf6
+start analyzing 441cf6
         0x441cf6: movzx eax, byte ptr [esi]
         0x441d02: lea esi, [esi + 1]
         0x441d0f: xor al, bl
@@ -2012,11 +2003,11 @@ handlers outputs:
         bytecode: 0x000000000047FB92 -> 0x000000000047FB97
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000000FFC
+done.
 
 
 
-
-437794
+start analyzing 437794
         0x437794: movzx eax, byte ptr [esi]
         0x437799: lea esi, [esi + 1]
         0x4377a7: xor al, bl
@@ -2046,11 +2037,11 @@ handlers outputs:
         bytecode: 0x000000000047FB97 -> 0x000000000047FB9C
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000000FFC
+done.
 
 
 
-
-438038
+start analyzing 438038
         0x438038: movzx eax, byte ptr [esi]
         0x43803c: add esi, 1
         0x438042: xor al, bl
@@ -2080,11 +2071,11 @@ handlers outputs:
         bytecode: 0x000000000047FB9C -> 0x000000000047FBA1
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000000FFC
+done.
 
 
 
-
-43fc2a
+start analyzing 43fc2a
         0x43fc2a: movzx eax, byte ptr [esi]
         0x43fc2f: lea esi, [esi + 1]
         0x43fc35: xor al, bl
@@ -2114,11 +2105,11 @@ handlers outputs:
         bytecode: 0x000000000047FBA1 -> 0x000000000047FBA6
         sp: 0x0000000000000F40 -> 0x0000000000000F40
         stack: 0x0000000000001000 -> 0x0000000000000FFC
+done.
 
 
 
-
-4442f0
+start analyzing 4442f0
 basic block ends with ret
         0x4442f0: mov esp, ebp
         0x4442f4: pop esi
@@ -2134,9 +2125,7 @@ handlers outputs:
         bytecode: 0x000000000047FBA6 -> 0x0000000000001000
         sp: 0x0000000000000F40 -> 0x0000000000001024
         stack: 0x0000000000001000 -> 0x0000000000000000
-
-
-
+done.
 
 
 
@@ -2152,350 +2141,286 @@ push edx
 push esi
 push Dword(0x0)
 47fa63:
-
-        Temp1(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x2c]=Temp1(4bytes)
+        t1(4bytes)=[SP+0x0](4bytes)
+        dword ptr scratch:[0x2c]=t1(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0x4)
 47fa68:
-
-        Temp2(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x28]=Temp2(4bytes)
+        t2(4bytes)=[SP+0x0](4bytes)
+        dword ptr scratch:[0x28]=t2(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0x4)
 47fa6d:
-
-        Temp3(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x20]=Temp3(4bytes)
+        t3(4bytes)=[SP+0x0](4bytes)
+        dword ptr scratch:[0x20]=t3(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0x4)
 47fa72:
-
-        Temp4(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x30]=Temp4(4bytes)
+        t4(4bytes)=[SP+0x0](4bytes)
+        dword ptr scratch:[0x30]=t4(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0x4)
 47fa77:
-
-        Temp5(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x14]=Temp5(4bytes)
+        t5(4bytes)=[SP+0x0](4bytes)
+        dword ptr scratch:[0x14]=t5(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0x4)
 47fa7c:
-
-        Temp6(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0xc]=Temp6(4bytes)
+        t6(4bytes)=[SP+0x0](4bytes)
+        dword ptr scratch:[0xc]=t6(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0x4)
 47fa81:
-
-        Temp7(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x10]=Temp7(4bytes)
+        t7(4bytes)=[SP+0x0](4bytes)
+        dword ptr scratch:[0x10]=t7(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0x4)
 47fa86:
-
-        Temp8(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x0]=Temp8(4bytes)
+        t8(4bytes)=[SP+0x0](4bytes)
+        dword ptr scratch:[0x0]=t8(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0x4)
 47fa8b:
-
-        Temp9(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x4]=Temp9(4bytes)
+        t9(4bytes)=[SP+0x0](4bytes)
+        dword ptr scratch:[0x4]=t9(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0x4)
 47fa90:
-
-        Temp10(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x34]=Temp10(4bytes)
+        t10(4bytes)=[SP+0x0](4bytes)
+        dword ptr scratch:[0x34]=t10(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0x4)
 47fa95:
-
-        Temp11(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x34]=Temp11(4bytes)
+        t11(4bytes)=[SP+0x0](4bytes)
+        dword ptr scratch:[0x34]=t11(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0x4)
 47fa9a:
-
-        Temp12(4bytes)=dword ptr scratch:[0x0]
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=Temp12(4bytes)
+        t12(4bytes)=dword ptr scratch:[0x0]
+        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=t12(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
 47fa9f:
-
         dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=STACK(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
 47faa3:
-
-        Temp13(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x18]=Temp13(4bytes)
+        t13(4bytes)=[SP+0x0](4bytes)
+        dword ptr scratch:[0x18]=t13(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0x4)
 47faa8:
-
         dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=0x200
         STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
 47fab0:
-
         dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=STACK(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
 47fab4:
-
         dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=0x4
         STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
 47fabc:
-
-        Temp14(4bytes)=[SP+0x0](4bytes)
-        Temp15(4bytes)=[SP+0x4](4bytes)
-        Temp16(4bytes)=Add(Temp14(4bytes), Temp15(4bytes))
-        dword ptr regular:[Add(STACK(4bytes), 0x4)]=Temp16(4bytes)
+        t14(4bytes)=[SP+0x0](4bytes)
+        t15(4bytes)=[SP+0x4](4bytes)
+        t16(4bytes)=Add(t14(4bytes), t15(4bytes))
+        dword ptr regular:[Add(STACK(4bytes), 0x4)]=t16(4bytes)
         dword ptr regular:[Add(STACK(4bytes), 0x0)]=eflags
 47fac0:
-
-        Temp17(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x38]=Temp17(4bytes)
+        t17(4bytes)=[SP+0x0](4bytes)
+        dword ptr scratch:[0x38]=t17(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0x4)
 47fac5:
-
         dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=STACK(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
 47fac9:
-
         dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=0x8
         STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
 47fad1:
-
-        Temp18(4bytes)=[SP+0x0](4bytes)
-        Temp19(4bytes)=[SP+0x4](4bytes)
-        Temp20(4bytes)=Add(Temp18(4bytes), Temp19(4bytes))
-        dword ptr regular:[Add(STACK(4bytes), 0x4)]=Temp20(4bytes)
+        t18(4bytes)=[SP+0x0](4bytes)
+        t19(4bytes)=[SP+0x4](4bytes)
+        t20(4bytes)=Add(t18(4bytes), t19(4bytes))
+        dword ptr regular:[Add(STACK(4bytes), 0x4)]=t20(4bytes)
         dword ptr regular:[Add(STACK(4bytes), 0x0)]=eflags
 47fad5:
-
-        Temp21(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x38]=Temp21(4bytes)
+        t21(4bytes)=[SP+0x0](4bytes)
+        dword ptr scratch:[0x38]=t21(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0x4)
 47fada:
-
-        Temp22(4bytes)=[SP+0x0](4bytes)
-        Temp23(4bytes)=[SP+0x4](4bytes)
-        Temp24(4bytes)=Not(Temp22(4bytes))
-        Temp25(4bytes)=Not(Temp23(4bytes))
-        Temp26(4bytes)=And(Temp24(4bytes), Temp25(4bytes))
-        dword ptr regular:[Add(STACK(4bytes), 0x4)]=Temp26(4bytes)
+        t22(4bytes)=[SP+0x0](4bytes)
+        t23(4bytes)=[SP+0x4](4bytes)
+        t24(4bytes)=Not(t22(4bytes))
+        t25(4bytes)=Not(t23(4bytes))
+        t26(4bytes)=And(t24(4bytes), t25(4bytes))
+        dword ptr regular:[Add(STACK(4bytes), 0x4)]=t26(4bytes)
         dword ptr regular:[Add(STACK(4bytes), 0x0)]=eflags
 47fade:
-
-        Temp27(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x24]=Temp27(4bytes)
+        t27(4bytes)=[SP+0x0](4bytes)
+        dword ptr scratch:[0x24]=t27(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0x4)
 47fae3:
-
-        Temp28(4bytes)=[SP+0x0](4bytes)
-        Temp29(4bytes)=[SP+0x4](4bytes)
-        Temp30(4bytes)=Add(Temp28(4bytes), Temp29(4bytes))
-        dword ptr regular:[Add(STACK(4bytes), 0x4)]=Temp30(4bytes)
+        t28(4bytes)=[SP+0x0](4bytes)
+        t29(4bytes)=[SP+0x4](4bytes)
+        t30(4bytes)=Add(t28(4bytes), t29(4bytes))
+        dword ptr regular:[Add(STACK(4bytes), 0x4)]=t30(4bytes)
         dword ptr regular:[Add(STACK(4bytes), 0x0)]=eflags
 47fae7:
-
-        Temp31(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x24]=Temp31(4bytes)
+        t31(4bytes)=[SP+0x0](4bytes)
+        dword ptr scratch:[0x24]=t31(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0x4)
 47faec:
-
         dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=STACK(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
 47faf0:
-
-        Temp32(4bytes)=[SP+0x0](4bytes)
-        Temp33(4bytes)=Deref(ss, Temp32(4bytes), dword)
-        dword ptr regular:[Add(STACK(4bytes), 0x0)]=Temp33(4bytes)
+        t32(4bytes)=[SP+0x0](4bytes)
+        t33(4bytes)=Deref(ss, t32(4bytes), dword)
+        dword ptr regular:[Add(STACK(4bytes), 0x0)]=t33(4bytes)
 47faf4:
-
-        Temp34(4bytes)=[SP+0x0](4bytes)
-        Temp35(4bytes)=[SP+0x4](4bytes)
-        Temp36(4bytes)=Not(Temp34(4bytes))
-        Temp37(4bytes)=Not(Temp35(4bytes))
-        Temp38(4bytes)=And(Temp36(4bytes), Temp37(4bytes))
-        dword ptr regular:[Add(STACK(4bytes), 0x4)]=Temp38(4bytes)
+        t34(4bytes)=[SP+0x0](4bytes)
+        t35(4bytes)=[SP+0x4](4bytes)
+        t36(4bytes)=Not(t34(4bytes))
+        t37(4bytes)=Not(t35(4bytes))
+        t38(4bytes)=And(t36(4bytes), t37(4bytes))
+        dword ptr regular:[Add(STACK(4bytes), 0x4)]=t38(4bytes)
         dword ptr regular:[Add(STACK(4bytes), 0x0)]=eflags
 47faf8:
-
-        Temp39(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x8]=Temp39(4bytes)
+        t39(4bytes)=[SP+0x0](4bytes)
+        dword ptr scratch:[0x8]=t39(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0x4)
 47fafd:
-
-        Temp40(4bytes)=[SP+0x0](4bytes)
-        Temp41(4bytes)=Cmp(Temp40(4bytes), 0xfa0)
+        t40(4bytes)=[SP+0x0](4bytes)
+        t41(4bytes)=Cmp(t40(4bytes), 0xfa0)
 47fb01:
-
-        Temp42(4bytes)=dword ptr scratch:[0x24]
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=Temp42(4bytes)
+        t42(4bytes)=dword ptr scratch:[0x24]
+        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=t42(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
 47fb06:
-
-        Temp43(4bytes)=dword ptr scratch:[0x24]
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=Temp43(4bytes)
+        t43(4bytes)=dword ptr scratch:[0x24]
+        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=t43(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
 47fb0b:
-
-        Temp44(4bytes)=[SP+0x0](4bytes)
-        Temp45(4bytes)=[SP+0x4](4bytes)
-        Temp46(4bytes)=Not(Temp44(4bytes))
-        Temp47(4bytes)=Not(Temp45(4bytes))
-        Temp48(4bytes)=And(Temp46(4bytes), Temp47(4bytes))
-        dword ptr regular:[Add(STACK(4bytes), 0x4)]=Temp48(4bytes)
+        t44(4bytes)=[SP+0x0](4bytes)
+        t45(4bytes)=[SP+0x4](4bytes)
+        t46(4bytes)=Not(t44(4bytes))
+        t47(4bytes)=Not(t45(4bytes))
+        t48(4bytes)=And(t46(4bytes), t47(4bytes))
+        dword ptr regular:[Add(STACK(4bytes), 0x4)]=t48(4bytes)
         dword ptr regular:[Add(STACK(4bytes), 0x0)]=eflags
 47fb0f:
-
-        Temp49(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x38]=Temp49(4bytes)
+        t49(4bytes)=[SP+0x0](4bytes)
+        dword ptr scratch:[0x38]=t49(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0x4)
 47fb14:
-
         dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=0xfffff7ea
         STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
 47fb1c:
-
-        Temp50(4bytes)=[SP+0x0](4bytes)
-        Temp51(4bytes)=[SP+0x4](4bytes)
-        Temp52(4bytes)=Not(Temp50(4bytes))
-        Temp53(4bytes)=Not(Temp51(4bytes))
-        Temp54(4bytes)=And(Temp52(4bytes), Temp53(4bytes))
-        dword ptr regular:[Add(STACK(4bytes), 0x4)]=Temp54(4bytes)
+        t50(4bytes)=[SP+0x0](4bytes)
+        t51(4bytes)=[SP+0x4](4bytes)
+        t52(4bytes)=Not(t50(4bytes))
+        t53(4bytes)=Not(t51(4bytes))
+        t54(4bytes)=And(t52(4bytes), t53(4bytes))
+        dword ptr regular:[Add(STACK(4bytes), 0x4)]=t54(4bytes)
         dword ptr regular:[Add(STACK(4bytes), 0x0)]=eflags
 47fb20:
-
-        Temp55(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x1c]=Temp55(4bytes)
+        t55(4bytes)=[SP+0x0](4bytes)
+        dword ptr scratch:[0x1c]=t55(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0x4)
 47fb25:
-
-        Temp56(4bytes)=dword ptr scratch:[0x8]
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=Temp56(4bytes)
+        t56(4bytes)=dword ptr scratch:[0x8]
+        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=t56(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
 47fb2a:
-
-        Temp57(4bytes)=dword ptr scratch:[0x8]
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=Temp57(4bytes)
+        t57(4bytes)=dword ptr scratch:[0x8]
+        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=t57(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
 47fb2f:
-
-        Temp58(4bytes)=[SP+0x0](4bytes)
-        Temp59(4bytes)=[SP+0x4](4bytes)
-        Temp60(4bytes)=Not(Temp58(4bytes))
-        Temp61(4bytes)=Not(Temp59(4bytes))
-        Temp62(4bytes)=And(Temp60(4bytes), Temp61(4bytes))
-        dword ptr regular:[Add(STACK(4bytes), 0x4)]=Temp62(4bytes)
+        t58(4bytes)=[SP+0x0](4bytes)
+        t59(4bytes)=[SP+0x4](4bytes)
+        t60(4bytes)=Not(t58(4bytes))
+        t61(4bytes)=Not(t59(4bytes))
+        t62(4bytes)=And(t60(4bytes), t61(4bytes))
+        dword ptr regular:[Add(STACK(4bytes), 0x4)]=t62(4bytes)
         dword ptr regular:[Add(STACK(4bytes), 0x0)]=eflags
 47fb33:
-
-        Temp63(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x38]=Temp63(4bytes)
+        t63(4bytes)=[SP+0x0](4bytes)
+        dword ptr scratch:[0x38]=t63(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0x4)
 47fb38:
-
         dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=0x815
         STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
 47fb40:
-
-        Temp64(4bytes)=[SP+0x0](4bytes)
-        Temp65(4bytes)=[SP+0x4](4bytes)
-        Temp66(4bytes)=Not(Temp64(4bytes))
-        Temp67(4bytes)=Not(Temp65(4bytes))
-        Temp68(4bytes)=And(Temp66(4bytes), Temp67(4bytes))
-        dword ptr regular:[Add(STACK(4bytes), 0x4)]=Temp68(4bytes)
+        t64(4bytes)=[SP+0x0](4bytes)
+        t65(4bytes)=[SP+0x4](4bytes)
+        t66(4bytes)=Not(t64(4bytes))
+        t67(4bytes)=Not(t65(4bytes))
+        t68(4bytes)=And(t66(4bytes), t67(4bytes))
+        dword ptr regular:[Add(STACK(4bytes), 0x4)]=t68(4bytes)
         dword ptr regular:[Add(STACK(4bytes), 0x0)]=eflags
 47fb44:
-
-        Temp69(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x1c]=Temp69(4bytes)
+        t69(4bytes)=[SP+0x0](4bytes)
+        dword ptr scratch:[0x1c]=t69(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0x4)
 47fb49:
-
-        Temp70(4bytes)=[SP+0x0](4bytes)
-        Temp71(4bytes)=[SP+0x4](4bytes)
-        Temp72(4bytes)=Add(Temp70(4bytes), Temp71(4bytes))
-        dword ptr regular:[Add(STACK(4bytes), 0x4)]=Temp72(4bytes)
+        t70(4bytes)=[SP+0x0](4bytes)
+        t71(4bytes)=[SP+0x4](4bytes)
+        t72(4bytes)=Add(t70(4bytes), t71(4bytes))
+        dword ptr regular:[Add(STACK(4bytes), 0x4)]=t72(4bytes)
         dword ptr regular:[Add(STACK(4bytes), 0x0)]=eflags
 47fb4d:
-
-        Temp73(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x3c]=Temp73(4bytes)
+        t73(4bytes)=[SP+0x0](4bytes)
+        dword ptr scratch:[0x3c]=t73(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0x4)
 47fb52:
-
-        Temp74(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x14]=Temp74(4bytes)
+        t74(4bytes)=[SP+0x0](4bytes)
+        dword ptr scratch:[0x14]=t74(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0x4)
 47fb57:
-
-        Temp75(4bytes)=dword ptr scratch:[0x28]
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=Temp75(4bytes)
+        t75(4bytes)=dword ptr scratch:[0x28]
+        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=t75(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
 47fb5c:
-
         dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=0x4312d7
         STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
 47fb64:
-
-        Temp76(4bytes)=dword ptr scratch:[0x2c]
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=Temp76(4bytes)
+        t76(4bytes)=dword ptr scratch:[0x2c]
+        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=t76(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
 47fb69:
-
-        Temp77(4bytes)=[SP+0x0](4bytes)
-        Temp78(4bytes)=[SP+0x4](4bytes)
-        Temp79(4bytes)=Add(Temp77(4bytes), Temp78(4bytes))
-        dword ptr regular:[Add(STACK(4bytes), 0x4)]=Temp79(4bytes)
+        t77(4bytes)=[SP+0x0](4bytes)
+        t78(4bytes)=[SP+0x4](4bytes)
+        t79(4bytes)=Add(t77(4bytes), t78(4bytes))
+        dword ptr regular:[Add(STACK(4bytes), 0x4)]=t79(4bytes)
         dword ptr regular:[Add(STACK(4bytes), 0x0)]=eflags
 47fb6d:
-
-        Temp80(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x38]=Temp80(4bytes)
+        t80(4bytes)=[SP+0x0](4bytes)
+        dword ptr scratch:[0x38]=t80(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0x4)
 47fb72:
-
         dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=0x40e068
         STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
 47fb7a:
-
-        Temp81(4bytes)=[SP+0x0](4bytes)
-        Temp82(4bytes)=Deref(regular, Temp81(4bytes), dword)
-        dword ptr regular:[Add(STACK(4bytes), 0x0)]=Temp82(4bytes)
+        t81(4bytes)=[SP+0x0](4bytes)
+        t82(4bytes)=Deref(regular, t81(4bytes), dword)
+        dword ptr regular:[Add(STACK(4bytes), 0x0)]=t82(4bytes)
 47fb7e:
-
-        Temp83(4bytes)=dword ptr scratch:[0x4]
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=Temp83(4bytes)
+        t83(4bytes)=dword ptr scratch:[0x4]
+        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=t83(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
 47fb83:
-
-        Temp84(4bytes)=dword ptr scratch:[0x18]
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=Temp84(4bytes)
+        t84(4bytes)=dword ptr scratch:[0x18]
+        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=t84(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
 47fb88:
-
-        Temp85(4bytes)=dword ptr scratch:[0x10]
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=Temp85(4bytes)
+        t85(4bytes)=dword ptr scratch:[0x10]
+        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=t85(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
 47fb8d:
-
-        Temp86(4bytes)=dword ptr scratch:[0xc]
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=Temp86(4bytes)
+        t86(4bytes)=dword ptr scratch:[0xc]
+        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=t86(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
 47fb92:
-
-        Temp87(4bytes)=dword ptr scratch:[0x14]
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=Temp87(4bytes)
+        t87(4bytes)=dword ptr scratch:[0x14]
+        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=t87(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
 47fb97:
-
-        Temp88(4bytes)=dword ptr scratch:[0x30]
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=Temp88(4bytes)
+        t88(4bytes)=dword ptr scratch:[0x30]
+        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=t88(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
 47fb9c:
-
-        Temp89(4bytes)=dword ptr scratch:[0x20]
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=Temp89(4bytes)
+        t89(4bytes)=dword ptr scratch:[0x20]
+        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=t89(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
 47fba1:
-
-        Temp90(4bytes)=dword ptr scratch:[0x28]
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=Temp90(4bytes)
+        t90(4bytes)=dword ptr scratch:[0x28]
+        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=t90(4bytes)
         STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
 47fba6:
-
         STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffff000)
 
-C:\Users\Lily\source\repos\VMProtectTest\x64\Release\VMProtectTest.exe (プロセス 12428) は、コード 0 で終了しました。
+
+C:\Users\Lily\source\repos\VMProtectTest\x64\Release\VMProtectTest.exe (プロセス 15896) は、コード 0 で終了しました。
 このウィンドウを閉じるには、任意のキーを押してください...
