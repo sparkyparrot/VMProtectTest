@@ -28,7 +28,6 @@ namespace IR
 		expr_memory,
 		expr_variable,
 		expr_immediate,
-		expr_deref,
 		expr_unary_operation,
 		expr_binary_operation
 	};
@@ -91,9 +90,6 @@ namespace IR
 	class Register : public Expression
 	{
 	public:
-		// vm
-		Register(triton::uint64 offset);
-
 		// x86register
 		Register(const triton::arch::Register &triton_register);
 
@@ -161,31 +157,13 @@ namespace IR
 	};
 
 
-	// Dereference (y = Deref(x))
-	class Dereference : public Expression
-	{
-	public:
-		Dereference(const std::shared_ptr<Expression> &expr, ir_segment segment, ir_size size);
-
-		virtual void to_string(std::ostream& stream) const override;
-
-		std::shared_ptr<Expression> get_expression() const;
-		void set_expression(const std::shared_ptr<Expression> &expr);
-
-	private:
-		ir_size m_size;
-		ir_segment m_segment;
-		std::shared_ptr<Expression> m_expr;
-	};
-
-
-	class Statement
+	class Instruction
 	{
 	protected:
 		statement_type m_statement_type;
 
-		Statement(statement_type t) : m_statement_type(t) {}
-		virtual ~Statement() {};
+		Instruction(statement_type t) : m_statement_type(t) {}
+		virtual ~Instruction() {};
 
 	public:
 		statement_type get_type() const
@@ -196,14 +174,14 @@ namespace IR
 	public:
 		virtual void to_string(std::ostream& stream) const = 0;
 	};
-	std::ostream& operator<<(std::ostream& stream, const Statement& expr);
-	std::ostream& operator<<(std::ostream& stream, const Statement* expr);
+	std::ostream& operator<<(std::ostream& stream, const Instruction& expr);
+	std::ostream& operator<<(std::ostream& stream, const Instruction* expr);
 
 	// Assign (x = y)
-	class Assign : public Statement
+	class Assign : public Instruction
 	{
 	public:
-		Assign(const std::shared_ptr<Expression> &left, const std::shared_ptr<Expression> &right);
+		Assign(const std::shared_ptr<Expression> left, const std::shared_ptr<Expression> right);
 
 		virtual void to_string(std::ostream& stream) const override;
 
@@ -223,10 +201,10 @@ namespace IR
 	};
 
 	// Push x
-	class Push : public Statement
+	class Push : public Instruction
 	{
 	public:
-		Push(const std::shared_ptr<Expression> &expr) : Statement(ir_statement_push)
+		Push(const std::shared_ptr<Expression> &expr) : Instruction(ir_statement_push)
 		{
 			this->m_expr = expr;
 		}
@@ -250,10 +228,10 @@ namespace IR
 	};
 
 	// Pop y
-	class Pop : public Statement
+	class Pop : public Instruction
 	{
 	public:
-		Pop(const std::shared_ptr<Expression> &expr) : Statement(ir_statement_pop)
+		Pop(const std::shared_ptr<Expression> &expr) : Instruction(ir_statement_pop)
 		{
 			this->m_expr = expr;
 		}
@@ -275,6 +253,24 @@ namespace IR
 	private:
 		std::shared_ptr<Expression> m_expr;
 	};
+
+	// Ret x
+	class Ret : public Instruction
+	{
+		triton::uint64 m_u;
+
+	public:
+		Ret(triton::uint64 u = 0) : Instruction(ir_statement_ret)
+		{
+			this->m_u = u;
+		}
+
+		virtual void to_string(std::ostream& stream) const override
+		{
+			stream << "Ret 0x" << std::hex << this->m_u;
+		}
+	};
+
 
 	// UnaryOperation
 	class UnaryOperation : public Expression
@@ -349,6 +345,20 @@ namespace IR
 		{
 			stream << "Neg(" << this->m_op << ")";
 		}
+	};
+	class FlagsOf : public UnaryOperation
+	{
+	public:
+		FlagsOf(const std::shared_ptr<Expression>& op0) : UnaryOperation(op0)
+		{
+		}
+
+		virtual void to_string(std::ostream& stream) const override
+		{
+			stream << "FlagsOf(" << this->m_op << ")";
+		}
+
+	private:
 	};
 
 	// BinaryOperation
@@ -578,10 +588,10 @@ namespace IR
 	};
 
 	// special
-	class Cpuid : public Statement
+	class Cpuid : public Instruction
 	{
 	public:
-		Cpuid() : Statement(ir_statement_cpuid)
+		Cpuid() : Instruction(ir_statement_cpuid)
 		{
 
 		}
@@ -591,10 +601,10 @@ namespace IR
 			stream << "Cpuid";
 		}
 	};
-	class Rdtsc : public Statement
+	class Rdtsc : public Instruction
 	{
 	public:
-		Rdtsc() : Statement(ir_statement_rdtsc)
+		Rdtsc() : Instruction(ir_statement_rdtsc)
 		{
 
 		}

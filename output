@@ -27,7 +27,7 @@ basic block ends with ret
 0x462117: add edi, eax
 0x4323ff: push edi
 0x432400: ret
-scratch_size: 0x00000000000000C0, scratch_length: 48
+scratch_size: 0xc0, scratch_length: 48
 start analyzing 4892af
 basic block ends with indirect unconditional branch
         0x4892af: movzx eax, byte ptr [esi]
@@ -38,7 +38,7 @@ basic block ends with indirect unconditional branch
         0x4892d1: neg al
         0x4892df: not al
         0x4892ea: xor bl, al
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x4892ef: mov ecx, dword ptr [ebp]
         0x41a261: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x2c]
@@ -54,9 +54,9 @@ modifies [x86_sp + 0x2c]
         0x474c45: add edi, eax
         0x437e65: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FA63 -> 0x000000000047FA68
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001004
+        bytecode: 0x47fa63 -> 0x47fa68
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1004
 done.
 
 
@@ -71,7 +71,7 @@ basic block ends with ret
         0x493fdf: neg al
         0x493fea: not al
         0x493ff2: xor bl, al
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x493ff9: mov ecx, dword ptr [ebp]
         0x494004: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x28]
@@ -88,9 +88,9 @@ modifies [x86_sp + 0x28]
         0x45b9ad: push edi
         0x45b9ae: ret
 handlers outputs:
-        bytecode: 0x000000000047FA68 -> 0x000000000047FA6D
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001004
+        bytecode: 0x47fa68 -> 0x47fa6d
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1004
 done.
 
 
@@ -105,7 +105,7 @@ basic block ends with indirect unconditional branch
         0x43cee0: neg al
         0x43cee6: not al
         0x43ceed: xor bl, al
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x43cef1: mov ecx, dword ptr [ebp]
         0x43cef6: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x20]
@@ -121,9 +121,9 @@ modifies [x86_sp + 0x20]
         0x499b07: add edi, eax
         0x499b09: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FA6D -> 0x000000000047FA72
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001004
+        bytecode: 0x47fa6d -> 0x47fa72
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1004
 done.
 
 
@@ -138,7 +138,7 @@ basic block ends with indirect unconditional branch
         0x42edcd: neg al
         0x42edd6: not al
         0x42ede2: xor bl, al
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x42eded: mov ecx, dword ptr [ebp]
         0x42edf1: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x30]
@@ -154,9 +154,9 @@ modifies [x86_sp + 0x30]
         0x45fdab: add edi, eax
         0x449229: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FA72 -> 0x000000000047FA77
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001004
+        bytecode: 0x47fa72 -> 0x47fa77
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1004
 done.
 
 
@@ -171,7 +171,7 @@ basic block ends with ret
         0x43cc60: neg al
         0x43cc65: not al
         0x43cc71: xor bl, al
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x43cc7b: mov ecx, dword ptr [ebp]
         0x43cc83: add ebp, 4
 modifies [x86_sp + 0x14]
@@ -188,9 +188,9 @@ modifies [x86_sp + 0x14]
         0x479987: push edi
         0x479988: ret
 handlers outputs:
-        bytecode: 0x000000000047FA77 -> 0x000000000047FA7C
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001004
+        bytecode: 0x47fa77 -> 0x47fa7c
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1004
 done.
 
 
@@ -205,7 +205,7 @@ basic block ends with ret
         0x4320a2: neg al
         0x4320aa: not al
         0x4320b4: xor bl, al
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x4320b6: mov ecx, dword ptr [ebp]
         0x4320bf: add ebp, 4
 modifies [x86_sp + 0xc]
@@ -222,9 +222,9 @@ modifies [x86_sp + 0xc]
         0x484226: push edi
         0x484227: ret
 handlers outputs:
-        bytecode: 0x000000000047FA7C -> 0x000000000047FA81
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001004
+        bytecode: 0x47fa7c -> 0x47fa81
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1004
 done.
 
 
@@ -239,7 +239,7 @@ basic block ends with indirect unconditional branch
         0x485af3: neg al
         0x485af5: not al
         0x485af8: xor bl, al
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x485afa: mov ecx, dword ptr [ebp]
         0x485b01: add ebp, 4
 modifies [x86_sp + 0x10]
@@ -255,9 +255,9 @@ modifies [x86_sp + 0x10]
         0x463349: add edi, eax
         0x46334b: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FA81 -> 0x000000000047FA86
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001004
+        bytecode: 0x47fa81 -> 0x47fa86
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1004
 done.
 
 
@@ -272,7 +272,7 @@ basic block ends with ret
         0x47213a: neg al
         0x47213e: not al
         0x47214c: xor bl, al
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x472151: mov ecx, dword ptr [ebp]
         0x480797: add ebp, 4
 modifies [x86_sp + 0x0]
@@ -289,9 +289,9 @@ modifies [x86_sp + 0x0]
         0x42d599: push edi
         0x42d59a: ret
 handlers outputs:
-        bytecode: 0x000000000047FA86 -> 0x000000000047FA8B
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001004
+        bytecode: 0x47fa86 -> 0x47fa8b
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1004
 done.
 
 
@@ -306,7 +306,7 @@ basic block ends with indirect unconditional branch
         0x430e13: neg al
         0x430e1a: not al
         0x430e21: xor bl, al
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x430e29: mov ecx, dword ptr [ebp]
         0x430e2d: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x4]
@@ -322,9 +322,9 @@ modifies [x86_sp + 0x4]
         0x48dcc2: add edi, eax
         0x451ade: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FA8B -> 0x000000000047FA90
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001004
+        bytecode: 0x47fa8b -> 0x47fa90
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1004
 done.
 
 
@@ -339,7 +339,7 @@ basic block ends with ret
         0x47b891: neg al
         0x47b89a: not al
         0x47b8a3: xor bl, al
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x47b8a9: mov ecx, dword ptr [ebp]
         0x47b8ad: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x34]
@@ -356,9 +356,9 @@ modifies [x86_sp + 0x34]
         0x4348e7: push edi
         0x4348e8: ret
 handlers outputs:
-        bytecode: 0x000000000047FA90 -> 0x000000000047FA95
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001004
+        bytecode: 0x47fa90 -> 0x47fa95
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1004
 done.
 
 
@@ -373,7 +373,7 @@ basic block ends with ret
         0x44c956: neg al
         0x44c95d: not al
         0x44c963: xor bl, al
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x44c96d: mov ecx, dword ptr [ebp]
         0x459689: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x34]
@@ -390,9 +390,9 @@ modifies [x86_sp + 0x34]
         0x469396: push edi
         0x469397: ret
 handlers outputs:
-        bytecode: 0x000000000047FA95 -> 0x000000000047FA9A
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001004
+        bytecode: 0x47fa95 -> 0x47fa9a
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1004
 done.
 
 
@@ -426,9 +426,9 @@ Load Scratch:[0x0]
         0x47f287: ja 0x4181bb
         0x4181bb: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FA9A -> 0x000000000047FA9F
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000000FFC
+        bytecode: 0x47fa9a -> 0x47fa9f
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0xffc
 done.
 
 
@@ -453,9 +453,9 @@ basic block ends with indirect unconditional branch
         0x47f287: ja 0x4181bb
         0x4181bb: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FA9F -> 0x000000000047FAA3
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000000FFC
+        bytecode: 0x47fa9f -> 0x47faa3
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0xffc
 done.
 
 
@@ -469,7 +469,7 @@ start analyzing 4892af
         0x4892d1: neg al
         0x4892df: not al
         0x4892ea: xor bl, al
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x4892ef: mov ecx, dword ptr [ebp]
         0x41a261: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x18]
@@ -485,9 +485,9 @@ modifies [x86_sp + 0x18]
         0x474c45: add edi, eax
         0x437e65: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FAA3 -> 0x000000000047FAA8
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001004
+        bytecode: 0x47faa3 -> 0x47faa8
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1004
 done.
 
 
@@ -520,9 +520,9 @@ basic block ends with indirect unconditional branch
         0x47f287: ja 0x4181bb
         0x4181bb: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FAA8 -> 0x000000000047FAB0
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000000FFC
+        bytecode: 0x47faa8 -> 0x47fab0
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0xffc
 done.
 
 
@@ -547,9 +547,9 @@ basic block ends with indirect unconditional branch
         0x47f287: ja 0x4181bb
         0x4181bb: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FAB0 -> 0x000000000047FAB4
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000000FFC
+        bytecode: 0x47fab0 -> 0x47fab4
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0xffc
 done.
 
 
@@ -582,18 +582,18 @@ basic block ends with indirect unconditional branch
         0x47f287: ja 0x4181bb
         0x4181bb: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FAB4 -> 0x000000000047FABC
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000000FFC
+        bytecode: 0x47fab4 -> 0x47fabc
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0xffc
 done.
 
 
 
 start analyzing 4365af
 basic block ends with ret
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x4365af: mov eax, dword ptr [ebp]
-Load [EBP+0x4
+Load [vmp_sp+0x4]
         0x4365c0: mov ecx, dword ptr [ebp + 4]
         0x4365ca: add eax, ecx
         0x4365cc: mov dword ptr [ebp + 4], eax
@@ -611,9 +611,9 @@ Load [EBP+0x4
         0x4816e6: push edi
         0x4816e7: ret
 handlers outputs:
-        bytecode: 0x000000000047FABC -> 0x000000000047FAC0
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001000
+        bytecode: 0x47fabc -> 0x47fac0
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1000
 done.
 
 
@@ -627,7 +627,7 @@ start analyzing 493fb7
         0x493fdf: neg al
         0x493fea: not al
         0x493ff2: xor bl, al
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x493ff9: mov ecx, dword ptr [ebp]
         0x494004: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x38]
@@ -644,9 +644,9 @@ modifies [x86_sp + 0x38]
         0x45b9ad: push edi
         0x45b9ae: ret
 handlers outputs:
-        bytecode: 0x000000000047FAC0 -> 0x000000000047FAC5
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001004
+        bytecode: 0x47fac0 -> 0x47fac5
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1004
 done.
 
 
@@ -671,9 +671,9 @@ basic block ends with indirect unconditional branch
         0x47f287: ja 0x4181bb
         0x4181bb: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FAC5 -> 0x000000000047FAC9
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000000FFC
+        bytecode: 0x47fac5 -> 0x47fac9
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0xffc
 done.
 
 
@@ -706,18 +706,18 @@ basic block ends with indirect unconditional branch
         0x47f287: ja 0x4181bb
         0x4181bb: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FAC9 -> 0x000000000047FAD1
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000000FFC
+        bytecode: 0x47fac9 -> 0x47fad1
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0xffc
 done.
 
 
 
 start analyzing 423f22
 basic block ends with indirect unconditional branch
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x423f22: mov eax, dword ptr [ebp]
-Load [EBP+0x4
+Load [vmp_sp+0x4]
         0x423f26: mov ecx, dword ptr [ebp + 4]
         0x423f30: add eax, ecx
         0x45fb92: mov dword ptr [ebp + 4], eax
@@ -734,9 +734,9 @@ Load [EBP+0x4
         0x417cb6: add edi, eax
         0x48e13d: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FAD1 -> 0x000000000047FAD5
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001000
+        bytecode: 0x47fad1 -> 0x47fad5
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1000
 done.
 
 
@@ -750,7 +750,7 @@ start analyzing 43cebf
         0x43cee0: neg al
         0x43cee6: not al
         0x43ceed: xor bl, al
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x43cef1: mov ecx, dword ptr [ebp]
         0x43cef6: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x38]
@@ -766,18 +766,18 @@ modifies [x86_sp + 0x38]
         0x499b07: add edi, eax
         0x499b09: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FAD5 -> 0x000000000047FADA
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001004
+        bytecode: 0x47fad5 -> 0x47fada
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1004
 done.
 
 
 
 start analyzing 463fb4
 basic block ends with indirect unconditional branch
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x463fb4: mov eax, dword ptr [ebp]
-Load [EBP+0x4
+Load [vmp_sp+0x4]
         0x463fbf: mov ecx, dword ptr [ebp + 4]
         0x463fc8: not eax
         0x463fca: not ecx
@@ -796,9 +796,9 @@ Load [EBP+0x4
         0x425d4f: add edi, eax
         0x47a346: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FADA -> 0x000000000047FADE
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001000
+        bytecode: 0x47fada -> 0x47fade
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1000
 done.
 
 
@@ -812,7 +812,7 @@ start analyzing 42eda2
         0x42edcd: neg al
         0x42edd6: not al
         0x42ede2: xor bl, al
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x42eded: mov ecx, dword ptr [ebp]
         0x42edf1: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x24]
@@ -828,18 +828,18 @@ modifies [x86_sp + 0x24]
         0x45fdab: add edi, eax
         0x449229: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FADE -> 0x000000000047FAE3
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001004
+        bytecode: 0x47fade -> 0x47fae3
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1004
 done.
 
 
 
 start analyzing 496c89
 basic block ends with indirect unconditional branch
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x496c89: mov eax, dword ptr [ebp]
-Load [EBP+0x4
+Load [vmp_sp+0x4]
         0x496c8d: mov ecx, dword ptr [ebp + 4]
         0x496c9a: add eax, ecx
         0x46be0f: mov dword ptr [ebp + 4], eax
@@ -856,9 +856,9 @@ Load [EBP+0x4
         0x439d0b: add edi, eax
         0x492ae3: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FAE3 -> 0x000000000047FAE7
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001000
+        bytecode: 0x47fae3 -> 0x47fae7
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1000
 done.
 
 
@@ -872,7 +872,7 @@ start analyzing 43cc41
         0x43cc60: neg al
         0x43cc65: not al
         0x43cc71: xor bl, al
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x43cc7b: mov ecx, dword ptr [ebp]
         0x43cc83: add ebp, 4
 modifies [x86_sp + 0x24]
@@ -889,9 +889,9 @@ modifies [x86_sp + 0x24]
         0x479987: push edi
         0x479988: ret
 handlers outputs:
-        bytecode: 0x000000000047FAE7 -> 0x000000000047FAEC
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001004
+        bytecode: 0x47fae7 -> 0x47faec
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1004
 done.
 
 
@@ -916,18 +916,18 @@ basic block ends with indirect unconditional branch
         0x47f287: ja 0x4181bb
         0x4181bb: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FAEC -> 0x000000000047FAF0
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000000FFC
+        bytecode: 0x47faec -> 0x47faf0
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0xffc
 done.
 
 
 
 start analyzing 4451ce
 basic block ends with ret
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x4451ce: mov ecx, dword ptr [ebp]
-Deref(t32,ss)
+Deref(t36,ss)
         0x4451d9: mov eax, dword ptr ss:[ecx]
         0x4451e2: mov dword ptr [ebp], eax
         0x4451eb: mov eax, dword ptr [esi]
@@ -942,18 +942,18 @@ Deref(t32,ss)
         0x423edf: push edi
         0x423ee0: ret
 handlers outputs:
-        bytecode: 0x000000000047FAF0 -> 0x000000000047FAF4
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001000
+        bytecode: 0x47faf0 -> 0x47faf4
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1000
 done.
 
 
 
 start analyzing 47e3ff
 basic block ends with ret
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x47e3ff: mov eax, dword ptr [ebp]
-Load [EBP+0x4
+Load [vmp_sp+0x4]
         0x47e403: mov ecx, dword ptr [ebp + 4]
         0x47e40b: not eax
         0x45700b: not ecx
@@ -973,9 +973,9 @@ Load [EBP+0x4
         0x4545f7: push edi
         0x4545f8: ret
 handlers outputs:
-        bytecode: 0x000000000047FAF4 -> 0x000000000047FAF8
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001000
+        bytecode: 0x47faf4 -> 0x47faf8
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1000
 done.
 
 
@@ -989,7 +989,7 @@ start analyzing 432085
         0x4320a2: neg al
         0x4320aa: not al
         0x4320b4: xor bl, al
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x4320b6: mov ecx, dword ptr [ebp]
         0x4320bf: add ebp, 4
 modifies [x86_sp + 0x8]
@@ -1006,9 +1006,9 @@ modifies [x86_sp + 0x8]
         0x484226: push edi
         0x484227: ret
 handlers outputs:
-        bytecode: 0x000000000047FAF8 -> 0x000000000047FAFD
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001004
+        bytecode: 0x47faf8 -> 0x47fafd
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1004
 done.
 
 
@@ -1016,7 +1016,7 @@ done.
 start analyzing 49879b
 basic block ends with indirect unconditional branch
 basic block ends with indirect unconditional branch
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x49879b: mov ebp, dword ptr [ebp]
         0x4987a9: mov eax, dword ptr [esi]
         0x44e529: add esi, 4
@@ -1032,9 +1032,9 @@ Load [EBP+0x0
         0x47f287: ja 0x4181bb
         0x4181bb: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FAFD -> 0x000000000047FB01
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001000
+        bytecode: 0x47fafd -> 0x47fb01
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1000
 done.
 
 
@@ -1068,9 +1068,9 @@ Load Scratch:[0x24]
         0x47f287: ja 0x4181bb
         0x4181bb: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FB01 -> 0x000000000047FB06
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000000FFC
+        bytecode: 0x47fb01 -> 0x47fb06
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0xffc
 done.
 
 
@@ -1104,18 +1104,18 @@ Load Scratch:[0x24]
         0x47f287: ja 0x4181bb
         0x4181bb: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FB06 -> 0x000000000047FB0B
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000000FFC
+        bytecode: 0x47fb06 -> 0x47fb0b
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0xffc
 done.
 
 
 
 start analyzing 487b17
 basic block ends with ret
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x487b17: mov eax, dword ptr [ebp]
-Load [EBP+0x4
+Load [vmp_sp+0x4]
         0x487b1b: mov ecx, dword ptr [ebp + 4]
         0x487b21: not eax
         0x460771: not ecx
@@ -1135,9 +1135,9 @@ Load [EBP+0x4
         0x4681f6: push edi
         0x4681f7: ret
 handlers outputs:
-        bytecode: 0x000000000047FB0B -> 0x000000000047FB0F
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001000
+        bytecode: 0x47fb0b -> 0x47fb0f
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1000
 done.
 
 
@@ -1151,7 +1151,7 @@ start analyzing 43285a
         0x485af3: neg al
         0x485af5: not al
         0x485af8: xor bl, al
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x485afa: mov ecx, dword ptr [ebp]
         0x485b01: add ebp, 4
 modifies [x86_sp + 0x38]
@@ -1167,9 +1167,9 @@ modifies [x86_sp + 0x38]
         0x463349: add edi, eax
         0x46334b: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FB0F -> 0x000000000047FB14
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001004
+        bytecode: 0x47fb0f -> 0x47fb14
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1004
 done.
 
 
@@ -1202,18 +1202,18 @@ basic block ends with indirect unconditional branch
         0x47f287: ja 0x4181bb
         0x4181bb: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FB14 -> 0x000000000047FB1C
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000000FFC
+        bytecode: 0x47fb14 -> 0x47fb1c
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0xffc
 done.
 
 
 
 start analyzing 45c2f6
 basic block ends with ret
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x45c2f6: mov eax, dword ptr [ebp]
-Load [EBP+0x4
+Load [vmp_sp+0x4]
         0x45c2fa: mov ecx, dword ptr [ebp + 4]
         0x45c304: not eax
         0x45c306: not ecx
@@ -1233,9 +1233,9 @@ Load [EBP+0x4
         0x466296: push edi
         0x466297: ret
 handlers outputs:
-        bytecode: 0x000000000047FB1C -> 0x000000000047FB20
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001000
+        bytecode: 0x47fb1c -> 0x47fb20
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1000
 done.
 
 
@@ -1249,7 +1249,7 @@ start analyzing 472114
         0x47213a: neg al
         0x47213e: not al
         0x47214c: xor bl, al
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x472151: mov ecx, dword ptr [ebp]
         0x480797: add ebp, 4
 modifies [x86_sp + 0x1c]
@@ -1266,9 +1266,9 @@ modifies [x86_sp + 0x1c]
         0x42d599: push edi
         0x42d59a: ret
 handlers outputs:
-        bytecode: 0x000000000047FB20 -> 0x000000000047FB25
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001004
+        bytecode: 0x47fb20 -> 0x47fb25
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1004
 done.
 
 
@@ -1302,9 +1302,9 @@ Load Scratch:[0x8]
         0x47f287: ja 0x4181bb
         0x4181bb: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FB25 -> 0x000000000047FB2A
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000000FFC
+        bytecode: 0x47fb25 -> 0x47fb2a
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0xffc
 done.
 
 
@@ -1338,18 +1338,18 @@ Load Scratch:[0x8]
         0x47f287: ja 0x4181bb
         0x4181bb: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FB2A -> 0x000000000047FB2F
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000000FFC
+        bytecode: 0x47fb2a -> 0x47fb2f
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0xffc
 done.
 
 
 
 start analyzing 43c7e5
 basic block ends with ret
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x43c7e5: mov eax, dword ptr [ebp]
-Load [EBP+0x4
+Load [vmp_sp+0x4]
         0x43c7eb: mov ecx, dword ptr [ebp + 4]
         0x43c7f3: not eax
         0x43c7f5: not ecx
@@ -1369,9 +1369,9 @@ Load [EBP+0x4
         0x437ae0: push edi
         0x437ae1: ret
 handlers outputs:
-        bytecode: 0x000000000047FB2F -> 0x000000000047FB33
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001000
+        bytecode: 0x47fb2f -> 0x47fb33
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1000
 done.
 
 
@@ -1385,7 +1385,7 @@ start analyzing 44efa7
         0x430e13: neg al
         0x430e1a: not al
         0x430e21: xor bl, al
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x430e29: mov ecx, dword ptr [ebp]
         0x430e2d: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x38]
@@ -1401,9 +1401,9 @@ modifies [x86_sp + 0x38]
         0x48dcc2: add edi, eax
         0x451ade: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FB33 -> 0x000000000047FB38
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001004
+        bytecode: 0x47fb33 -> 0x47fb38
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1004
 done.
 
 
@@ -1436,18 +1436,18 @@ basic block ends with indirect unconditional branch
         0x47f287: ja 0x4181bb
         0x4181bb: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FB38 -> 0x000000000047FB40
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000000FFC
+        bytecode: 0x47fb38 -> 0x47fb40
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0xffc
 done.
 
 
 
 start analyzing 44c4d5
 basic block ends with ret
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x44c4d5: mov eax, dword ptr [ebp]
-Load [EBP+0x4
+Load [vmp_sp+0x4]
         0x44c4db: mov ecx, dword ptr [ebp + 4]
         0x44c4e0: not eax
         0x44c4e2: not ecx
@@ -1467,9 +1467,9 @@ Load [EBP+0x4
         0x48001f: push edi
         0x480020: ret
 handlers outputs:
-        bytecode: 0x000000000047FB40 -> 0x000000000047FB44
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001000
+        bytecode: 0x47fb40 -> 0x47fb44
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1000
 done.
 
 
@@ -1483,7 +1483,7 @@ start analyzing 47b865
         0x47b891: neg al
         0x47b89a: not al
         0x47b8a3: xor bl, al
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x47b8a9: mov ecx, dword ptr [ebp]
         0x47b8ad: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x1c]
@@ -1500,18 +1500,18 @@ modifies [x86_sp + 0x1c]
         0x4348e7: push edi
         0x4348e8: ret
 handlers outputs:
-        bytecode: 0x000000000047FB44 -> 0x000000000047FB49
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001004
+        bytecode: 0x47fb44 -> 0x47fb49
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1004
 done.
 
 
 
 start analyzing 42e0d5
 basic block ends with indirect unconditional branch
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x42e0d5: mov eax, dword ptr [ebp]
-Load [EBP+0x4
+Load [vmp_sp+0x4]
         0x42e0de: mov ecx, dword ptr [ebp + 4]
         0x42e0e4: add eax, ecx
         0x43ad11: mov dword ptr [ebp + 4], eax
@@ -1528,9 +1528,9 @@ Load [EBP+0x4
         0x48640b: add edi, eax
         0x48640d: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FB49 -> 0x000000000047FB4D
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001000
+        bytecode: 0x47fb49 -> 0x47fb4d
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1000
 done.
 
 
@@ -1544,7 +1544,7 @@ start analyzing 44489f
         0x44c956: neg al
         0x44c95d: not al
         0x44c963: xor bl, al
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x44c96d: mov ecx, dword ptr [ebp]
         0x459689: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x3c]
@@ -1561,9 +1561,9 @@ modifies [x86_sp + 0x3c]
         0x469396: push edi
         0x469397: ret
 handlers outputs:
-        bytecode: 0x000000000047FB4D -> 0x000000000047FB52
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001004
+        bytecode: 0x47fb4d -> 0x47fb52
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1004
 done.
 
 
@@ -1577,7 +1577,7 @@ start analyzing 4892af
         0x4892d1: neg al
         0x4892df: not al
         0x4892ea: xor bl, al
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x4892ef: mov ecx, dword ptr [ebp]
         0x41a261: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x14]
@@ -1593,9 +1593,9 @@ modifies [x86_sp + 0x14]
         0x474c45: add edi, eax
         0x437e65: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FB52 -> 0x000000000047FB57
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001004
+        bytecode: 0x47fb52 -> 0x47fb57
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1004
 done.
 
 
@@ -1629,9 +1629,9 @@ Load Scratch:[0x28]
         0x47f287: ja 0x4181bb
         0x4181bb: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FB57 -> 0x000000000047FB5C
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000000FFC
+        bytecode: 0x47fb57 -> 0x47fb5c
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0xffc
 done.
 
 
@@ -1664,9 +1664,9 @@ basic block ends with indirect unconditional branch
         0x47f287: ja 0x4181bb
         0x4181bb: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FB5C -> 0x000000000047FB64
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000000FFC
+        bytecode: 0x47fb5c -> 0x47fb64
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0xffc
 done.
 
 
@@ -1700,18 +1700,18 @@ Load Scratch:[0x2c]
         0x47f287: ja 0x4181bb
         0x4181bb: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FB64 -> 0x000000000047FB69
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000000FFC
+        bytecode: 0x47fb64 -> 0x47fb69
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0xffc
 done.
 
 
 
 start analyzing 49af2e
 basic block ends with ret
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x49af2e: mov eax, dword ptr [ebp]
-Load [EBP+0x4
+Load [vmp_sp+0x4]
         0x49af36: mov ecx, dword ptr [ebp + 4]
         0x49af3a: add eax, ecx
         0x481a8f: mov dword ptr [ebp + 4], eax
@@ -1729,9 +1729,9 @@ Load [EBP+0x4
         0x49b254: push edi
         0x49b255: ret
 handlers outputs:
-        bytecode: 0x000000000047FB69 -> 0x000000000047FB6D
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001000
+        bytecode: 0x47fb69 -> 0x47fb6d
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1000
 done.
 
 
@@ -1745,7 +1745,7 @@ start analyzing 493fb7
         0x493fdf: neg al
         0x493fea: not al
         0x493ff2: xor bl, al
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x493ff9: mov ecx, dword ptr [ebp]
         0x494004: lea ebp, [ebp + 4]
 modifies [x86_sp + 0x38]
@@ -1762,9 +1762,9 @@ modifies [x86_sp + 0x38]
         0x45b9ad: push edi
         0x45b9ae: ret
 handlers outputs:
-        bytecode: 0x000000000047FB6D -> 0x000000000047FB72
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001004
+        bytecode: 0x47fb6d -> 0x47fb72
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1004
 done.
 
 
@@ -1797,18 +1797,18 @@ basic block ends with indirect unconditional branch
         0x47f287: ja 0x4181bb
         0x4181bb: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FB72 -> 0x000000000047FB7A
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000000FFC
+        bytecode: 0x47fb72 -> 0x47fb7a
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0xffc
 done.
 
 
 
 start analyzing 480201
 basic block ends with indirect unconditional branch
-Load [EBP+0x0
+Load [vmp_sp+0x0]
         0x480201: mov ecx, dword ptr [ebp]
-Deref(t81,unknown)
+Deref(t93,unknown)
         0x480205: mov eax, dword ptr [ecx]
         0x48020d: mov dword ptr [ebp], eax
         0x480214: mov eax, dword ptr [esi]
@@ -1822,9 +1822,9 @@ Deref(t81,unknown)
         0x477e82: add edi, eax
         0x4968ed: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FB7A -> 0x000000000047FB7E
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000001000
+        bytecode: 0x47fb7a -> 0x47fb7e
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0x1000
 done.
 
 
@@ -1858,9 +1858,9 @@ Load Scratch:[0x4]
         0x47f287: ja 0x4181bb
         0x4181bb: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FB7E -> 0x000000000047FB83
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000000FFC
+        bytecode: 0x47fb7e -> 0x47fb83
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0xffc
 done.
 
 
@@ -1894,9 +1894,9 @@ Load Scratch:[0x18]
         0x47f287: ja 0x4181bb
         0x4181bb: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FB83 -> 0x000000000047FB88
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000000FFC
+        bytecode: 0x47fb83 -> 0x47fb88
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0xffc
 done.
 
 
@@ -1930,9 +1930,9 @@ Load Scratch:[0x10]
         0x47f287: ja 0x4181bb
         0x4181bb: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FB88 -> 0x000000000047FB8D
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000000FFC
+        bytecode: 0x47fb88 -> 0x47fb8d
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0xffc
 done.
 
 
@@ -1966,9 +1966,9 @@ Load Scratch:[0xc]
         0x47f287: ja 0x4181bb
         0x4181bb: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FB8D -> 0x000000000047FB92
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000000FFC
+        bytecode: 0x47fb8d -> 0x47fb92
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0xffc
 done.
 
 
@@ -2000,9 +2000,9 @@ Load Scratch:[0x14]
         0x47f287: ja 0x4181bb
         0x4181bb: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FB92 -> 0x000000000047FB97
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000000FFC
+        bytecode: 0x47fb92 -> 0x47fb97
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0xffc
 done.
 
 
@@ -2034,9 +2034,9 @@ Load Scratch:[0x30]
         0x47f287: ja 0x4181bb
         0x4181bb: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FB97 -> 0x000000000047FB9C
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000000FFC
+        bytecode: 0x47fb97 -> 0x47fb9c
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0xffc
 done.
 
 
@@ -2068,9 +2068,9 @@ Load Scratch:[0x20]
         0x47f287: ja 0x4181bb
         0x4181bb: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FB9C -> 0x000000000047FBA1
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000000FFC
+        bytecode: 0x47fb9c -> 0x47fba1
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0xffc
 done.
 
 
@@ -2102,9 +2102,9 @@ Load Scratch:[0x28]
         0x47f287: ja 0x4181bb
         0x4181bb: jmp edi
 handlers outputs:
-        bytecode: 0x000000000047FBA1 -> 0x000000000047FBA6
-        sp: 0x0000000000000F40 -> 0x0000000000000F40
-        stack: 0x0000000000001000 -> 0x0000000000000FFC
+        bytecode: 0x47fba1 -> 0x47fba6
+          x86_sp: 0xf40 -> 0xf40
+          vmp_sp: 0x1000 -> 0xffc
 done.
 
 
@@ -2122,305 +2122,260 @@ basic block ends with ret
         0x444316: pop ecx
         0x43f92a: ret
 handlers outputs:
-        bytecode: 0x000000000047FBA6 -> 0x0000000000001000
-        sp: 0x0000000000000F40 -> 0x0000000000001024
-        stack: 0x0000000000001000 -> 0x0000000000000000
+        bytecode: 0x47fba6 -> 0x1000
+          x86_sp: 0xf40 -> 0x1024
+          vmp_sp: 0x1000 -> 0x0
 done.
 
 
 
-push Dword(0x9486CFEA)
-push Dword(0x4869C5)
-push ecx
-push ebp
-push eax
-push edi
-push eflags
-push ebx
-push edx
-push esi
-push Dword(0x0)
-47fa63:
-        t1(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x2c]=t1(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0x4)
-47fa68:
-        t2(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x28]=t2(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0x4)
-47fa6d:
-        t3(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x20]=t3(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0x4)
-47fa72:
-        t4(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x30]=t4(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0x4)
-47fa77:
-        t5(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x14]=t5(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0x4)
-47fa7c:
-        t6(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0xc]=t6(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0x4)
-47fa81:
-        t7(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x10]=t7(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0x4)
-47fa86:
-        t8(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x0]=t8(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0x4)
-47fa8b:
-        t9(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x4]=t9(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0x4)
-47fa90:
-        t10(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x34]=t10(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0x4)
-47fa95:
-        t11(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x34]=t11(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0x4)
-47fa9a:
-        t12(4bytes)=dword ptr scratch:[0x0]
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=t12(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
-47fa9f:
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=STACK(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
-47faa3:
-        t13(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x18]=t13(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0x4)
-47faa8:
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=0x200
-        STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
-47fab0:
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=STACK(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
-47fab4:
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=0x4
-        STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
-47fabc:
-        t14(4bytes)=[SP+0x0](4bytes)
-        t15(4bytes)=[SP+0x4](4bytes)
-        t16(4bytes)=Add(t14(4bytes), t15(4bytes))
-        dword ptr regular:[Add(STACK(4bytes), 0x4)]=t16(4bytes)
-        dword ptr regular:[Add(STACK(4bytes), 0x0)]=eflags
-47fac0:
-        t17(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x38]=t17(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0x4)
-47fac5:
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=STACK(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
-47fac9:
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=0x8
-        STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
-47fad1:
-        t18(4bytes)=[SP+0x0](4bytes)
-        t19(4bytes)=[SP+0x4](4bytes)
-        t20(4bytes)=Add(t18(4bytes), t19(4bytes))
-        dword ptr regular:[Add(STACK(4bytes), 0x4)]=t20(4bytes)
-        dword ptr regular:[Add(STACK(4bytes), 0x0)]=eflags
-47fad5:
-        t21(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x38]=t21(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0x4)
-47fada:
-        t22(4bytes)=[SP+0x0](4bytes)
-        t23(4bytes)=[SP+0x4](4bytes)
-        t24(4bytes)=Not(t22(4bytes))
-        t25(4bytes)=Not(t23(4bytes))
-        t26(4bytes)=And(t24(4bytes), t25(4bytes))
-        dword ptr regular:[Add(STACK(4bytes), 0x4)]=t26(4bytes)
-        dword ptr regular:[Add(STACK(4bytes), 0x0)]=eflags
-47fade:
-        t27(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x24]=t27(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0x4)
-47fae3:
-        t28(4bytes)=[SP+0x0](4bytes)
-        t29(4bytes)=[SP+0x4](4bytes)
-        t30(4bytes)=Add(t28(4bytes), t29(4bytes))
-        dword ptr regular:[Add(STACK(4bytes), 0x4)]=t30(4bytes)
-        dword ptr regular:[Add(STACK(4bytes), 0x0)]=eflags
-47fae7:
-        t31(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x24]=t31(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0x4)
-47faec:
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=STACK(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
-47faf0:
-        t32(4bytes)=[SP+0x0](4bytes)
-        t33(4bytes)=Deref(ss, t32(4bytes), dword)
-        dword ptr regular:[Add(STACK(4bytes), 0x0)]=t33(4bytes)
-47faf4:
-        t34(4bytes)=[SP+0x0](4bytes)
-        t35(4bytes)=[SP+0x4](4bytes)
-        t36(4bytes)=Not(t34(4bytes))
-        t37(4bytes)=Not(t35(4bytes))
-        t38(4bytes)=And(t36(4bytes), t37(4bytes))
-        dword ptr regular:[Add(STACK(4bytes), 0x4)]=t38(4bytes)
-        dword ptr regular:[Add(STACK(4bytes), 0x0)]=eflags
-47faf8:
-        t39(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x8]=t39(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0x4)
-47fafd:
-        t40(4bytes)=[SP+0x0](4bytes)
-        t41(4bytes)=Cmp(t40(4bytes), 0xfa0)
-47fb01:
-        t42(4bytes)=dword ptr scratch:[0x24]
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=t42(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
-47fb06:
-        t43(4bytes)=dword ptr scratch:[0x24]
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=t43(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
-47fb0b:
-        t44(4bytes)=[SP+0x0](4bytes)
-        t45(4bytes)=[SP+0x4](4bytes)
-        t46(4bytes)=Not(t44(4bytes))
-        t47(4bytes)=Not(t45(4bytes))
-        t48(4bytes)=And(t46(4bytes), t47(4bytes))
-        dword ptr regular:[Add(STACK(4bytes), 0x4)]=t48(4bytes)
-        dword ptr regular:[Add(STACK(4bytes), 0x0)]=eflags
-47fb0f:
-        t49(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x38]=t49(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0x4)
-47fb14:
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=0xfffff7ea
-        STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
-47fb1c:
-        t50(4bytes)=[SP+0x0](4bytes)
-        t51(4bytes)=[SP+0x4](4bytes)
-        t52(4bytes)=Not(t50(4bytes))
-        t53(4bytes)=Not(t51(4bytes))
-        t54(4bytes)=And(t52(4bytes), t53(4bytes))
-        dword ptr regular:[Add(STACK(4bytes), 0x4)]=t54(4bytes)
-        dword ptr regular:[Add(STACK(4bytes), 0x0)]=eflags
-47fb20:
-        t55(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x1c]=t55(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0x4)
-47fb25:
-        t56(4bytes)=dword ptr scratch:[0x8]
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=t56(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
-47fb2a:
-        t57(4bytes)=dword ptr scratch:[0x8]
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=t57(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
-47fb2f:
-        t58(4bytes)=[SP+0x0](4bytes)
-        t59(4bytes)=[SP+0x4](4bytes)
-        t60(4bytes)=Not(t58(4bytes))
-        t61(4bytes)=Not(t59(4bytes))
-        t62(4bytes)=And(t60(4bytes), t61(4bytes))
-        dword ptr regular:[Add(STACK(4bytes), 0x4)]=t62(4bytes)
-        dword ptr regular:[Add(STACK(4bytes), 0x0)]=eflags
-47fb33:
-        t63(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x38]=t63(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0x4)
-47fb38:
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=0x815
-        STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
-47fb40:
-        t64(4bytes)=[SP+0x0](4bytes)
-        t65(4bytes)=[SP+0x4](4bytes)
-        t66(4bytes)=Not(t64(4bytes))
-        t67(4bytes)=Not(t65(4bytes))
-        t68(4bytes)=And(t66(4bytes), t67(4bytes))
-        dword ptr regular:[Add(STACK(4bytes), 0x4)]=t68(4bytes)
-        dword ptr regular:[Add(STACK(4bytes), 0x0)]=eflags
-47fb44:
-        t69(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x1c]=t69(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0x4)
-47fb49:
-        t70(4bytes)=[SP+0x0](4bytes)
-        t71(4bytes)=[SP+0x4](4bytes)
-        t72(4bytes)=Add(t70(4bytes), t71(4bytes))
-        dword ptr regular:[Add(STACK(4bytes), 0x4)]=t72(4bytes)
-        dword ptr regular:[Add(STACK(4bytes), 0x0)]=eflags
-47fb4d:
-        t73(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x3c]=t73(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0x4)
-47fb52:
-        t74(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x14]=t74(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0x4)
-47fb57:
-        t75(4bytes)=dword ptr scratch:[0x28]
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=t75(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
-47fb5c:
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=0x4312d7
-        STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
-47fb64:
-        t76(4bytes)=dword ptr scratch:[0x2c]
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=t76(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
-47fb69:
-        t77(4bytes)=[SP+0x0](4bytes)
-        t78(4bytes)=[SP+0x4](4bytes)
-        t79(4bytes)=Add(t77(4bytes), t78(4bytes))
-        dword ptr regular:[Add(STACK(4bytes), 0x4)]=t79(4bytes)
-        dword ptr regular:[Add(STACK(4bytes), 0x0)]=eflags
-47fb6d:
-        t80(4bytes)=[SP+0x0](4bytes)
-        dword ptr scratch:[0x38]=t80(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0x4)
-47fb72:
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=0x40e068
-        STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
-47fb7a:
-        t81(4bytes)=[SP+0x0](4bytes)
-        t82(4bytes)=Deref(regular, t81(4bytes), dword)
-        dword ptr regular:[Add(STACK(4bytes), 0x0)]=t82(4bytes)
-47fb7e:
-        t83(4bytes)=dword ptr scratch:[0x4]
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=t83(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
-47fb83:
-        t84(4bytes)=dword ptr scratch:[0x18]
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=t84(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
-47fb88:
-        t85(4bytes)=dword ptr scratch:[0x10]
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=t85(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
-47fb8d:
-        t86(4bytes)=dword ptr scratch:[0xc]
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=t86(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
-47fb92:
-        t87(4bytes)=dword ptr scratch:[0x14]
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=t87(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
-47fb97:
-        t88(4bytes)=dword ptr scratch:[0x30]
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=t88(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
-47fb9c:
-        t89(4bytes)=dword ptr scratch:[0x20]
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=t89(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
-47fba1:
-        t90(4bytes)=dword ptr scratch:[0x28]
-        dword ptr regular:[Add(STACK(4bytes), 0xfffffffffffffffc)]=t90(4bytes)
-        STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffffffc)
-47fba6:
-        STACK(4bytes)=Add(STACK(4bytes), 0xfffffffffffff000)
+        Push (0x9486cfea)
+        Push (0x4869c5)
+        Push (ecx)
+        Push (ebp)
+        Push (eax)
+        Push (edi)
+        Push (eflags)
+        Push (ebx)
+        Push (edx)
+        Push (esi)
+        Push (0x0)
+        t1_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        dword ptr scratch:[0x2c]=t1_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0x4)
+        t2_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        dword ptr scratch:[0x28]=t2_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0x4)
+        t3_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        dword ptr scratch:[0x20]=t3_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0x4)
+        t4_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        dword ptr scratch:[0x30]=t4_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0x4)
+        t5_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        dword ptr scratch:[0x14]=t5_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0x4)
+        t6_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        dword ptr scratch:[0xc]=t6_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0x4)
+        t7_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        dword ptr scratch:[0x10]=t7_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0x4)
+        t8_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        dword ptr scratch:[0x0]=t8_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0x4)
+        t9_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        dword ptr scratch:[0x4]=t9_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0x4)
+        t10_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        dword ptr scratch:[0x34]=t10_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0x4)
+        t11_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        dword ptr scratch:[0x34]=t11_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0x4)
+        t12_dword=dword ptr scratch:[0x0]
+        dword ptr regular:[Add(vmp_sp_dword, 0xfffffffffffffffc)]=t12_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0xfffffffffffffffc)
+        dword ptr regular:[Add(vmp_sp_dword, 0xfffffffffffffffc)]=vmp_sp_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0xfffffffffffffffc)
+        t13_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        dword ptr scratch:[0x18]=t13_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0x4)
+        dword ptr regular:[Add(vmp_sp_dword, 0xfffffffffffffffc)]=0x200
+        vmp_sp_dword=Add(vmp_sp_dword, 0xfffffffffffffffc)
+        dword ptr regular:[Add(vmp_sp_dword, 0xfffffffffffffffc)]=vmp_sp_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0xfffffffffffffffc)
+        dword ptr regular:[Add(vmp_sp_dword, 0xfffffffffffffffc)]=0x4
+        vmp_sp_dword=Add(vmp_sp_dword, 0xfffffffffffffffc)
+        t14_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        t15_dword=dword ptr regular:[Add(vmp_sp_dword, 0x4)]
+        t16_dword=Add(t14_dword, t15_dword)
+        t17_dword=FlagsOf(Add(t14_dword, t15_dword))
+        dword ptr regular:[Add(vmp_sp_dword, 0x4)]=t16_dword
+        dword ptr regular:[Add(vmp_sp_dword, 0x0)]=t17_dword
+        t18_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        dword ptr scratch:[0x38]=t18_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0x4)
+        dword ptr regular:[Add(vmp_sp_dword, 0xfffffffffffffffc)]=vmp_sp_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0xfffffffffffffffc)
+        dword ptr regular:[Add(vmp_sp_dword, 0xfffffffffffffffc)]=0x8
+        vmp_sp_dword=Add(vmp_sp_dword, 0xfffffffffffffffc)
+        t19_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        t20_dword=dword ptr regular:[Add(vmp_sp_dword, 0x4)]
+        t21_dword=Add(t19_dword, t20_dword)
+        t22_dword=FlagsOf(Add(t19_dword, t20_dword))
+        dword ptr regular:[Add(vmp_sp_dword, 0x4)]=t21_dword
+        dword ptr regular:[Add(vmp_sp_dword, 0x0)]=t22_dword
+        t23_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        dword ptr scratch:[0x38]=t23_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0x4)
+        t24_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        t25_dword=dword ptr regular:[Add(vmp_sp_dword, 0x4)]
+        t26_dword=Not(t24_dword)
+        t27_dword=Not(t25_dword)
+        t28_dword=And(t26_dword, t27_dword)
+        t29_dword=FlagsOf(And(t26_dword, t27_dword))
+        dword ptr regular:[Add(vmp_sp_dword, 0x4)]=t28_dword
+        dword ptr regular:[Add(vmp_sp_dword, 0x0)]=t29_dword
+        t30_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        dword ptr scratch:[0x24]=t30_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0x4)
+        t31_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        t32_dword=dword ptr regular:[Add(vmp_sp_dword, 0x4)]
+        t33_dword=Add(t31_dword, t32_dword)
+        t34_dword=FlagsOf(Add(t31_dword, t32_dword))
+        dword ptr regular:[Add(vmp_sp_dword, 0x4)]=t33_dword
+        dword ptr regular:[Add(vmp_sp_dword, 0x0)]=t34_dword
+        t35_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        dword ptr scratch:[0x24]=t35_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0x4)
+        dword ptr regular:[Add(vmp_sp_dword, 0xfffffffffffffffc)]=vmp_sp_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0xfffffffffffffffc)
+        t36_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        t37_dword=dword ptr ss:[t36_dword]
+        dword ptr regular:[Add(vmp_sp_dword, 0x0)]=t37_dword
+        t38_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        t39_dword=dword ptr regular:[Add(vmp_sp_dword, 0x4)]
+        t40_dword=Not(t38_dword)
+        t41_dword=Not(t39_dword)
+        t42_dword=And(t40_dword, t41_dword)
+        t43_dword=FlagsOf(And(t40_dword, t41_dword))
+        dword ptr regular:[Add(vmp_sp_dword, 0x4)]=t42_dword
+        dword ptr regular:[Add(vmp_sp_dword, 0x0)]=t43_dword
+        t44_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        dword ptr scratch:[0x8]=t44_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0x4)
+        t45_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        t46_dword=Cmp(t45_dword, 0xfa0)
+        t47_dword=FlagsOf(Cmp(t45_dword, 0xfa0))
+        t48_dword=dword ptr scratch:[0x24]
+        dword ptr regular:[Add(vmp_sp_dword, 0xfffffffffffffffc)]=t48_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0xfffffffffffffffc)
+        t49_dword=dword ptr scratch:[0x24]
+        dword ptr regular:[Add(vmp_sp_dword, 0xfffffffffffffffc)]=t49_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0xfffffffffffffffc)
+        t50_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        t51_dword=dword ptr regular:[Add(vmp_sp_dword, 0x4)]
+        t52_dword=Not(t50_dword)
+        t53_dword=Not(t51_dword)
+        t54_dword=And(t52_dword, t53_dword)
+        t55_dword=FlagsOf(And(t52_dword, t53_dword))
+        dword ptr regular:[Add(vmp_sp_dword, 0x4)]=t54_dword
+        dword ptr regular:[Add(vmp_sp_dword, 0x0)]=t55_dword
+        t56_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        dword ptr scratch:[0x38]=t56_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0x4)
+        dword ptr regular:[Add(vmp_sp_dword, 0xfffffffffffffffc)]=0xfffff7ea
+        vmp_sp_dword=Add(vmp_sp_dword, 0xfffffffffffffffc)
+        t57_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        t58_dword=dword ptr regular:[Add(vmp_sp_dword, 0x4)]
+        t59_dword=Not(t57_dword)
+        t60_dword=Not(t58_dword)
+        t61_dword=And(t59_dword, t60_dword)
+        t62_dword=FlagsOf(And(t59_dword, t60_dword))
+        dword ptr regular:[Add(vmp_sp_dword, 0x4)]=t61_dword
+        dword ptr regular:[Add(vmp_sp_dword, 0x0)]=t62_dword
+        t63_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        dword ptr scratch:[0x1c]=t63_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0x4)
+        t64_dword=dword ptr scratch:[0x8]
+        dword ptr regular:[Add(vmp_sp_dword, 0xfffffffffffffffc)]=t64_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0xfffffffffffffffc)
+        t65_dword=dword ptr scratch:[0x8]
+        dword ptr regular:[Add(vmp_sp_dword, 0xfffffffffffffffc)]=t65_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0xfffffffffffffffc)
+        t66_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        t67_dword=dword ptr regular:[Add(vmp_sp_dword, 0x4)]
+        t68_dword=Not(t66_dword)
+        t69_dword=Not(t67_dword)
+        t70_dword=And(t68_dword, t69_dword)
+        t71_dword=FlagsOf(And(t68_dword, t69_dword))
+        dword ptr regular:[Add(vmp_sp_dword, 0x4)]=t70_dword
+        dword ptr regular:[Add(vmp_sp_dword, 0x0)]=t71_dword
+        t72_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        dword ptr scratch:[0x38]=t72_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0x4)
+        dword ptr regular:[Add(vmp_sp_dword, 0xfffffffffffffffc)]=0x815
+        vmp_sp_dword=Add(vmp_sp_dword, 0xfffffffffffffffc)
+        t73_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        t74_dword=dword ptr regular:[Add(vmp_sp_dword, 0x4)]
+        t75_dword=Not(t73_dword)
+        t76_dword=Not(t74_dword)
+        t77_dword=And(t75_dword, t76_dword)
+        t78_dword=FlagsOf(And(t75_dword, t76_dword))
+        dword ptr regular:[Add(vmp_sp_dword, 0x4)]=t77_dword
+        dword ptr regular:[Add(vmp_sp_dword, 0x0)]=t78_dword
+        t79_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        dword ptr scratch:[0x1c]=t79_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0x4)
+        t80_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        t81_dword=dword ptr regular:[Add(vmp_sp_dword, 0x4)]
+        t82_dword=Add(t80_dword, t81_dword)
+        t83_dword=FlagsOf(Add(t80_dword, t81_dword))
+        dword ptr regular:[Add(vmp_sp_dword, 0x4)]=t82_dword
+        dword ptr regular:[Add(vmp_sp_dword, 0x0)]=t83_dword
+        t84_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        dword ptr scratch:[0x3c]=t84_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0x4)
+        t85_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        dword ptr scratch:[0x14]=t85_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0x4)
+        t86_dword=dword ptr scratch:[0x28]
+        dword ptr regular:[Add(vmp_sp_dword, 0xfffffffffffffffc)]=t86_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0xfffffffffffffffc)
+        dword ptr regular:[Add(vmp_sp_dword, 0xfffffffffffffffc)]=0x4312d7
+        vmp_sp_dword=Add(vmp_sp_dword, 0xfffffffffffffffc)
+        t87_dword=dword ptr scratch:[0x2c]
+        dword ptr regular:[Add(vmp_sp_dword, 0xfffffffffffffffc)]=t87_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0xfffffffffffffffc)
+        t88_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        t89_dword=dword ptr regular:[Add(vmp_sp_dword, 0x4)]
+        t90_dword=Add(t88_dword, t89_dword)
+        t91_dword=FlagsOf(Add(t88_dword, t89_dword))
+        dword ptr regular:[Add(vmp_sp_dword, 0x4)]=t90_dword
+        dword ptr regular:[Add(vmp_sp_dword, 0x0)]=t91_dword
+        t92_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        dword ptr scratch:[0x38]=t92_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0x4)
+        dword ptr regular:[Add(vmp_sp_dword, 0xfffffffffffffffc)]=0x40e068
+        vmp_sp_dword=Add(vmp_sp_dword, 0xfffffffffffffffc)
+        t93_dword=dword ptr regular:[Add(vmp_sp_dword, 0x0)]
+        t94_dword=dword ptr regular:[t93_dword]
+        dword ptr regular:[Add(vmp_sp_dword, 0x0)]=t94_dword
+        t95_dword=dword ptr scratch:[0x4]
+        dword ptr regular:[Add(vmp_sp_dword, 0xfffffffffffffffc)]=t95_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0xfffffffffffffffc)
+        t96_dword=dword ptr scratch:[0x18]
+        dword ptr regular:[Add(vmp_sp_dword, 0xfffffffffffffffc)]=t96_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0xfffffffffffffffc)
+        t97_dword=dword ptr scratch:[0x10]
+        dword ptr regular:[Add(vmp_sp_dword, 0xfffffffffffffffc)]=t97_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0xfffffffffffffffc)
+        t98_dword=dword ptr scratch:[0xc]
+        dword ptr regular:[Add(vmp_sp_dword, 0xfffffffffffffffc)]=t98_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0xfffffffffffffffc)
+        t99_dword=dword ptr scratch:[0x14]
+        dword ptr regular:[Add(vmp_sp_dword, 0xfffffffffffffffc)]=t99_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0xfffffffffffffffc)
+        t100_dword=dword ptr scratch:[0x30]
+        dword ptr regular:[Add(vmp_sp_dword, 0xfffffffffffffffc)]=t100_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0xfffffffffffffffc)
+        t101_dword=dword ptr scratch:[0x20]
+        dword ptr regular:[Add(vmp_sp_dword, 0xfffffffffffffffc)]=t101_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0xfffffffffffffffc)
+        t102_dword=dword ptr scratch:[0x28]
+        dword ptr regular:[Add(vmp_sp_dword, 0xfffffffffffffffc)]=t102_dword
+        vmp_sp_dword=Add(vmp_sp_dword, 0xfffffffffffffffc)
+        Pop (esi)
+        Pop (edx)
+        Pop (ebx)
+        Pop (eflags)
+        Pop (edi)
+        Pop (eax)
+        Pop (ebp)
+        Pop (ecx)
+        Ret 0x0
 
 
-C:\Users\Lily\source\repos\VMProtectTest\x64\Release\VMProtectTest.exe (プロセス 15896) は、コード 0 で終了しました。
+C:\Users\Lily\source\repos\VMProtectTest\x64\Release\VMProtectTest.exe (プロセス 13656) は、コード 0 で終了しました。
 このウィンドウを閉じるには、任意のキーを押してください...

@@ -38,16 +38,6 @@ namespace IR
 	}
 
 	// Register
-	Register::Register(triton::uint64 offset) : Expression(expr_register)
-	{
-		if (offset > 0xFF)
-			throw std::runtime_error("offset is bigger than 0xFF");
-
-		char name[64];
-		sprintf_s(name, 64, "VM_REG_%02llX", offset);
-		this->m_name.assign(name);
-		this->m_offset = offset;
-	}
 	Register::Register(const triton::arch::Register &triton_register) : Expression(expr_register)
 	{
 		this->m_name = triton_register.getName();
@@ -98,7 +88,7 @@ namespace IR
 	}
 	void Variable::to_string(std::ostream& stream) const
 	{
-		stream << this->get_name() << "(" << this->m_size << "bytes)";
+		stream << this->get_name() << "_" << get_size_string(this->m_size);
 	}
 	std::string Variable::get_name() const
 	{
@@ -122,32 +112,8 @@ namespace IR
 	}
 
 
-	// Dereference
-	Dereference::Dereference(const std::shared_ptr<Expression> &expr, ir_segment segment, ir_size size) : Expression(expr_deref)
-	{
-		this->m_expr = expr;
-		this->m_segment = segment;
-		this->m_size = size;
-	}
-	std::shared_ptr<Expression> Dereference::get_expression() const
-	{
-		return this->m_expr;
-	}
-	void Dereference::set_expression(const std::shared_ptr<Expression> &expr)
-	{
-		this->m_expr = expr;
-	}
-	void Dereference::to_string(std::ostream& stream) const
-	{
-		// Deref(segment, expr, size)
-		stream << "Deref(" << get_segment_string(this->m_segment) << ", "
-			<< this->get_expression() << ", "
-			<< get_size_string(this->m_size) << ")";
-	}
-
-
 	// Assign
-	Assign::Assign(const std::shared_ptr<Expression> &left, const std::shared_ptr<Expression> &right) : Statement(ir_statement_assign)
+	Assign::Assign(const std::shared_ptr<Expression> left, const std::shared_ptr<Expression> right) : Instruction(ir_statement_assign)
 	{
 		this->m_left = left;
 		this->m_right = right;
@@ -178,12 +144,12 @@ namespace IR
 		return stream;
 	}
 
-	std::ostream& operator<<(std::ostream& stream, const Statement& expr)
+	std::ostream& operator<<(std::ostream& stream, const Instruction& expr)
 	{
 		expr.to_string(stream);
 		return stream;
 	}
-	std::ostream& operator<<(std::ostream& stream, const Statement* expr)
+	std::ostream& operator<<(std::ostream& stream, const Instruction* expr)
 	{
 		expr->to_string(stream);
 		return stream;

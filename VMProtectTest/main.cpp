@@ -118,7 +118,7 @@ void test_v1()
 	//analyzer.analyze_vm_enter(stream, 0x0041F618);
 	//analyzer.analyze_vm_enter(stream, 0x00477CBB);
 
-	unsigned long long handler_address = analyzer.get_ip();
+	triton::uint64 handler_address = analyzer.get_ip();
 	while (handler_address)
 	{
 		std::cout << "start analyzing " << std::hex << handler_address << "\n";
