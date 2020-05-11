@@ -64,7 +64,7 @@ public:
 	// vm-handler
 	void symbolize_memory(const triton::arch::MemoryAccess& mem, VMPHandlerContext *context);
 	std::vector<std::shared_ptr<IR::Expression>> save_expressions(triton::arch::Instruction &triton_instruction, VMPHandlerContext *context);
-	void check_arity_operation(triton::arch::Instruction &triton_instruction, const std::vector<std::shared_ptr<IR::Expression>> &operands_expressions, VMPHandlerContext *context);
+	void check_arity_operation(triton::arch::Instruction &triton_instruction, const std::vector<std::shared_ptr<IR::Expression>> &operands_expressions, VMPHandlerContext *context, bool maybe_flag_written);
 	void check_store_access(triton::arch::Instruction &triton_instruction, VMPHandlerContext *context);
 
 	void analyze_vm_handler(AbstractStream& stream, triton::uint64 handler_address);

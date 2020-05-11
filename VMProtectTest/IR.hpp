@@ -587,6 +587,35 @@ namespace IR
 		}
 	};
 
+	class Mul : public BinaryOperation
+	{
+	public:
+		Mul(const std::shared_ptr<Expression>& op0,
+			const std::shared_ptr<Expression>& op1) : BinaryOperation(op0, op1)
+		{
+
+		}
+
+		virtual void to_string(std::ostream& stream) const override
+		{
+			stream << "Mul(" << this->m_op0 << ", " << this->m_op1 << ")";
+		}
+	};
+	class IMul : public BinaryOperation
+	{
+	public:
+		IMul(const std::shared_ptr<Expression>& op0,
+			const std::shared_ptr<Expression>& op1) : BinaryOperation(op0, op1)
+		{
+
+		}
+
+		virtual void to_string(std::ostream& stream) const override
+		{
+			stream << "IMul(" << this->m_op0 << ", " << this->m_op1 << ")";
+		}
+	};
+
 	// special
 	class Cpuid : public Instruction
 	{

@@ -253,6 +253,11 @@ public:
 		const xed_simple_flag_t* rfi = xed_decoded_inst_get_rflags_info(this);
 		return xed_simple_flag_get_written_flag_set(rfi);
 	}
+	inline xed_bool_t writes_flags() const
+	{
+		const xed_simple_flag_t* rfi = xed_decoded_inst_get_rflags_info(this);
+		return rfi ? xed_simple_flag_writes_flags(rfi) : 0;
+	}
 
 	// my functions
 	inline unsigned long long get_addr() const

@@ -119,8 +119,10 @@ bool is_binary_operation(const triton::arch::Instruction &triton_instruction)
 		case triton::arch::x86::ID_INS_AND:
 		case triton::arch::x86::ID_INS_OR:
 		case triton::arch::x86::ID_INS_XOR:
-		case triton::arch::x86::ID_INS_CMP:
-		case triton::arch::x86::ID_INS_TEST:
+		//case triton::arch::x86::ID_INS_CMP:
+		//case triton::arch::x86::ID_INS_TEST:
+		case triton::arch::x86::ID_INS_MUL:
+		case triton::arch::x86::ID_INS_IMUL:
 			return true;
 
 		default:
@@ -325,7 +327,10 @@ void VMProtectAnalyzer::analyze_vm_enter(AbstractStream& stream, triton::uint64 
 		triton::arch::Instruction triton_instruction;
 		triton_instruction.setOpcode(&bytes[0], (triton::uint32)bytes.size());
 		triton_instruction.setAddress(xed_instruction->get_addr());
-		triton_api->processing(triton_instruction);
+		if (!triton_api->processing(triton_instruction))
+		{
+			throw std::runtime_error("triton processing failed");
+		}
 
 		// check flags
 		if (check_flags)
@@ -557,8 +562,52 @@ std::vector<std::shared_ptr<IR::Expression>> VMProtectAnalyzer::save_expressions
 	}
 
 	bool do_it = false;
-	for (const auto& operand : triton_instruction.operands)
+	auto operand_index = 0;
+	if (triton_instruction.getType() == triton::arch::x86::ID_INS_MUL
+		|| triton_instruction.getType() == triton::arch::x86::ID_INS_IMUL)
 	{
+		if (triton_instruction.operands.size() == 1)
+		{
+			// edx:eax = eax * r/m
+			triton::arch::Register _reg = triton_api->registers.x86_eax;
+			switch (triton_instruction.operands[0].getSize())
+			{
+				case 1: _reg = triton_api->registers.x86_al; break;
+				case 2: _reg = triton_api->registers.x86_ax; break;
+				case 4: _reg = triton_api->registers.x86_eax; break;
+				default: throw std::runtime_error("idk whats wrong");
+			}
+			const auto simplified_reg = triton_api->processSimplification(triton_api->getRegisterAst(_reg), true);
+			if (simplified_reg->isSymbolized())
+			{
+				triton::engines::symbolic::SharedSymbolicVariable _symvar = get_symbolic_var(simplified_reg);
+				if (!_symvar)
+					throw std::runtime_error("idk whats wrong2");
+
+				// load symbolic
+				auto _it = context->expression_map.find(_symvar->getId());
+				if (_it != context->expression_map.end())
+				{
+					expressions.push_back(_it->second);
+					do_it = true;
+				}
+			}
+			else
+			{
+				expressions.push_back(std::make_shared<IR::Immediate>(
+					triton_api->getConcreteRegisterValue(_reg).convert_to<triton::uint64>()));
+			}
+		}
+		else if (triton_instruction.operands.size() == 3)
+		{
+			// op0 = r/m * imm
+			operand_index = 1;
+		}
+	}
+
+	for (; operand_index < triton_instruction.operands.size(); operand_index++)
+	{
+		const auto& operand = triton_instruction.operands[operand_index];
 		if (operand.getType() == triton::arch::operand_e::OP_IMM)
 		{
 			expressions.push_back(std::make_shared<IR::Immediate>(
@@ -618,7 +667,8 @@ std::vector<std::shared_ptr<IR::Expression>> VMProtectAnalyzer::save_expressions
 		expressions.clear();
 	return expressions;
 }
-void VMProtectAnalyzer::check_arity_operation(triton::arch::Instruction &triton_instruction, const std::vector<std::shared_ptr<IR::Expression>> &operands_expressions, VMPHandlerContext *context)
+void VMProtectAnalyzer::check_arity_operation(triton::arch::Instruction& triton_instruction,
+	const std::vector<std::shared_ptr<IR::Expression>>& operands_expressions, VMPHandlerContext* context, bool maybe_flag_written)
 {
 	if (triton_instruction.getType() == triton::arch::x86::ID_INS_CPUID)
 	{
@@ -658,7 +708,44 @@ void VMProtectAnalyzer::check_arity_operation(triton::arch::Instruction &triton_
 	if (!unary && !binary)
 		return;
 
-	// symbolize left operand
+	//
+	if ((triton_instruction.getType() == triton::arch::x86::ID_INS_MUL
+		|| triton_instruction.getType() == triton::arch::x86::ID_INS_IMUL) && triton_instruction.operands.size() == 1)
+	{
+		// edx:eax = eax * r/m
+		triton::arch::Register _reg_eax, _reg_edx;
+		switch (triton_instruction.operands[0].getSize())
+		{
+			case 1:
+			{
+				_reg_eax = triton_api->registers.x86_ax;
+				break;
+			}
+			case 2:
+			{
+				_reg_eax = triton_api->registers.x86_ax;
+				_reg_edx = triton_api->registers.x86_dx;
+				break;
+			}
+			case 4:
+			{
+				_reg_eax = triton_api->registers.x86_eax;
+				_reg_edx = triton_api->registers.x86_edx;
+				break;
+			}
+			default: throw std::runtime_error("idk whats wrong");
+		}
+
+		if (2 <= triton_instruction.operands[0].getSize())
+		{
+			// t0 = mul(eax, src)
+			// t1 = extract(t0)
+			// t2 = extract(t0)			but... is this good idea?
+		}
+		return;
+	}
+
+	// symbolize destination
 	triton::engines::symbolic::SharedSymbolicVariable symvar;
 	const auto& operand0 = triton_instruction.operands[0];
 	if (operand0.getType() == triton::arch::operand_e::OP_REG)
@@ -785,6 +872,16 @@ void VMProtectAnalyzer::check_arity_operation(triton::arch::Instruction &triton_
 				expr = std::make_shared<IR::Test>(op0_expression, op1_expression);
 				break;
 			}
+			case triton::arch::x86::ID_INS_MUL:
+			{
+				expr = std::make_shared<IR::Mul>(op0_expression, op1_expression);
+				break;
+			}
+			case triton::arch::x86::ID_INS_IMUL:
+			{
+				expr = std::make_shared<IR::IMul>(op0_expression, op1_expression);
+				break;
+			}
 			default:
 			{
 				throw std::runtime_error("unknown binary operation");
@@ -796,21 +893,16 @@ void VMProtectAnalyzer::check_arity_operation(triton::arch::Instruction &triton_
 	symvar->setAlias(temp_variable->get_name());
 
 	// check if flags are written
-	for (const auto& pair : triton_instruction.getWrittenRegisters())
+	if (maybe_flag_written)
 	{
-		const triton::arch::Register& written_register = pair.first;
-		if (this->triton_api->isFlag(written_register))
-		{
-			// declare Temp
-			auto _temp = IR::Variable::create_variable(4);
+		// declare Temp
+		auto _temp = IR::Variable::create_variable(4);
 
-			// tvar = FlagOf(expr)
-			auto symvar_eflags = this->triton_api->symbolizeRegister(this->triton_api->registers.x86_eflags);
-			context->instructions.push_back(std::make_shared<IR::Assign>(_temp, std::make_shared<IR::FlagsOf>(expr)));
-			context->expression_map[symvar_eflags->getId()] = _temp;
-			symvar_eflags->setAlias(_temp->get_name());
-			break;
-		}
+		// tvar = FlagOf(expr)
+		auto symvar_eflags = this->triton_api->symbolizeRegister(this->triton_api->registers.x86_eflags);
+		context->instructions.push_back(std::make_shared<IR::Assign>(_temp, std::make_shared<IR::FlagsOf>(expr)));
+		context->expression_map[symvar_eflags->getId()] = _temp;
+		symvar_eflags->setAlias(_temp->get_name());
 	}
 }
 void VMProtectAnalyzer::check_store_access(triton::arch::Instruction &triton_instruction, VMPHandlerContext *context)
@@ -839,7 +931,7 @@ void VMProtectAnalyzer::check_store_access(triton::arch::Instruction &triton_ins
 		if (this->is_scratch_area_address(lea_ast, context))
 		{
 			const triton::uint64 scratch_offset = lea_ast->evaluate().convert_to<triton::uint64>() - context->x86_sp;
-			std::cout << "modifies [x86_sp + 0x" << std::hex << scratch_offset << "]\n";
+			std::cout << "Store [x86_sp + 0x" << std::hex << scratch_offset << "]\n";
 
 			// create IR (VM_REG = mem_ast)
 			auto source_node = triton_api->processSimplification(mem_ast, true);
@@ -1056,6 +1148,9 @@ void VMProtectAnalyzer::analyze_vm_handler(AbstractStream& stream, triton::uint6
 			}
 		}
 
+		// triton removes from written registers if it is NOT actually written, so xed helps here
+		const bool maybe_flag_written = xed_instruction->writes_flags();
+
 		// do stuff with triton
 		triton::arch::Instruction triton_instruction;
 		triton_instruction.setOpcode(&bytes[0], (triton::uint32)bytes.size());
@@ -1080,11 +1175,13 @@ void VMProtectAnalyzer::analyze_vm_handler(AbstractStream& stream, triton::uint6
 			}
 		}
 		std::vector<std::shared_ptr<IR::Expression>> operands_expressions = this->save_expressions(triton_instruction, &context);
-
-		triton_api->processing(triton_instruction);
+		if (!triton_api->processing(triton_instruction))
+		{
+			throw std::runtime_error("triton processing failed");
+		}
 
 		// lol
-		this->check_arity_operation(triton_instruction, operands_expressions, &context);
+		this->check_arity_operation(triton_instruction, operands_expressions, &context, maybe_flag_written);
 		this->check_store_access(triton_instruction, &context);
 
 		if (xed_instruction->get_category() != XED_CATEGORY_UNCOND_BR
@@ -1178,17 +1275,6 @@ void VMProtectAnalyzer::analyze_vm_handler(AbstractStream& stream, triton::uint6
 	}
 
 l_categorize_handler:
-
-	// append stack modification
-	triton::sint64 vmp_sp_offset = this->get_bp() - context.vmp_sp;	// needs to be signed
-	if (vmp_sp_offset)
-	{
-		// vmp_sp = add(vmp_sp, vmp_sp_offset)
-		std::shared_ptr<IR::Expression> vmp_sp_expr = context.expression_map[context.symvar_vmp_sp->getId()];
-		std::shared_ptr<IR::Expression> add_expr = std::make_shared<IR::Add>(vmp_sp_expr, std::make_shared<IR::Immediate>(vmp_sp_offset));
-		context.instructions.push_back(std::make_shared<IR::Assign>(vmp_sp_expr, add_expr));
-	}
-
 	this->categorize_handler(&context);
 	this->m_vmp_instructions.insert(this->m_vmp_instructions.end(), context.instructions.begin(), context.instructions.end());
 }
@@ -1209,7 +1295,10 @@ void VMProtectAnalyzer::analyze_vm_exit(VMPHandlerContext* context)
 		triton::arch::Instruction triton_instruction;
 		triton_instruction.setOpcode(&bytes[0], (triton::uint32)bytes.size());
 		triton_instruction.setAddress(xed_instruction->get_addr());
-		triton_api->processing(triton_instruction);
+		if (!triton_api->processing(triton_instruction))
+		{
+			throw std::runtime_error("triton processing failed");
+		}
 
 		for (const auto& pair : triton_instruction.getWrittenRegisters())
 		{
@@ -1328,19 +1417,54 @@ void VMProtectAnalyzer::categorize_handler(VMPHandlerContext *context)
 
 	bool handler_detected = false;
 
-	// if x86_sp == compute(vmp_sp) then vm exit handler
-	const triton::ast::SharedAbstractNode simplified_sp_ast =
+	// check x86_sp
+	const triton::ast::SharedAbstractNode simplified_x86_sp =
 		triton_api->processSimplification(triton_api->getRegisterAst(sp_register), true);
-	std::set<triton::ast::SharedAbstractNode> symvars = collect_symvars(simplified_sp_ast);
+	std::set<triton::ast::SharedAbstractNode> symvars = collect_symvars(simplified_x86_sp);
 	if (symvars.size() == 1)
 	{
 		const triton::ast::SharedAbstractNode _node = *symvars.begin();
 		const auto _symvar = std::dynamic_pointer_cast<triton::ast::VariableNode>(_node)->getSymbolicVariable();
 		if (_symvar->getId() == context->symvar_vmp_sp->getId())
 		{
+			// if x86_sp == compute(vmp_sp) then vm exit handler
 			this->analyze_vm_exit(context);
 			handler_detected = true;
+			return;
 		}
+	}
+
+	// check vmp_sp
+	const triton::ast::SharedAbstractNode simplified_vmp_sp =
+		triton_api->processSimplification(triton_api->getRegisterAst(bp_register), true);
+	if (simplified_vmp_sp->getType() == triton::ast::BVADD_NODE)
+	{
+		// vmp_sp = add(vmp_sp, vmp_sp_offset)
+		triton::sint64 vmp_sp_offset = this->get_bp() - context->vmp_sp;	// needs to be signed
+		std::shared_ptr<IR::Expression> vmp_sp_expr = context->expression_map[context->symvar_vmp_sp->getId()];
+		std::shared_ptr<IR::Expression> add_expr = std::make_shared<IR::Add>(vmp_sp_expr, std::make_shared<IR::Immediate>(vmp_sp_offset));
+		context->instructions.push_back(std::make_shared<IR::Assign>(vmp_sp_expr, add_expr));
+	}
+	else if (simplified_vmp_sp->getType() == triton::ast::VARIABLE_NODE)
+	{
+		const auto _symvar = std::dynamic_pointer_cast<triton::ast::VariableNode>(simplified_vmp_sp)->getSymbolicVariable();
+		if (_symvar != context->symvar_vmp_sp)
+		{
+			auto it = context->expression_map.find(_symvar->getId());
+			if (it == context->expression_map.end())
+			{
+				throw std::runtime_error("invalid vmp_sp");
+			}
+
+			// vmp_sp = x
+			std::shared_ptr<IR::Expression> vmp_sp_expr = context->expression_map[context->symvar_vmp_sp->getId()];
+			context->instructions.push_back(std::make_shared<IR::Assign>(vmp_sp_expr, it->second));
+		}
+	}
+	else
+	{
+		std::cout << simplified_vmp_sp << std::endl;
+		throw std::runtime_error("invalid vmp_sp");
 	}
 
 	if (!handler_detected)
