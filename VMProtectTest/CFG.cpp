@@ -4,7 +4,6 @@
 #include "AbstractStream.hpp"
 #include "x86_instruction.hpp"
 
-// deob
 // optimizations
 void _callback(triton::API& ctx, const triton::arch::MemoryAccess& mem)
 {
@@ -54,8 +53,6 @@ unsigned int apply_constant_folding(std::list<std::shared_ptr<x86_instruction>>&
 			throw std::runtime_error("triton processing failed");
 		}
 
-		//std::cout << triton_instruction << "\n";
-
 		switch (triton_instruction.getType())
 		{
 			case triton::arch::x86::ID_INS_PUSH:
@@ -69,22 +66,23 @@ unsigned int apply_constant_folding(std::list<std::shared_ptr<x86_instruction>>&
 					{
 						// constant
 						triton::uint64 uimm = triton_api->getConcreteRegisterValue(_reg).convert_to<triton::uint64>();
-						xed_instruction->init_from_decode();
-						xed_instruction->set_operand_order(0, XED_OPERAND_IMM0);
-						xed_instruction->set_uimm0(uimm, _reg.getSize());
+						xed_instruction->encoder_init_from_decode();
+						xed_instruction->encoder_set_operand_order(0, XED_OPERAND_IMM0);
+						xed_instruction->encoder_set_uimm0(uimm, _reg.getSize());
 						xed_instruction->encode();
 					}
 				}
 				else if (op0.getType() == triton::arch::operand_e::OP_MEM)
 				{
 					const auto& _mem = op0.getConstMemory();
-					if (!triton_api->isMemorySymbolized(_mem))
+					if (!triton_api->isMemorySymbolized(_mem)
+						&& !_mem.getLeaAst()->isSymbolized())
 					{
 						// constant
 						triton::uint64 uimm = triton_api->getConcreteMemoryValue(_mem).convert_to<triton::uint64>();
-						xed_instruction->init_from_decode();
-						xed_instruction->set_operand_order(0, XED_OPERAND_IMM0);
-						xed_instruction->set_uimm0(uimm, _mem.getSize());
+						xed_instruction->encoder_init_from_decode();
+						xed_instruction->encoder_set_operand_order(0, XED_OPERAND_IMM0);
+						xed_instruction->encoder_set_uimm0(uimm, _mem.getSize());
 						xed_instruction->encode();
 					}
 				}
@@ -108,10 +106,10 @@ unsigned int apply_constant_folding(std::list<std::shared_ptr<x86_instruction>>&
 					{
 						// constant but what with flags
 						triton::uint64 uimm = triton_api->getConcreteRegisterValue(_reg).convert_to<triton::uint64>();
-						xed_instruction->init_from_decode();
-						xed_instruction->set_iclass(XED_ICLASS_MOV);
-						xed_instruction->set_operand_order(1, XED_OPERAND_IMM0);
-						xed_instruction->set_uimm0(uimm, _reg.getSize());
+						xed_instruction->encoder_init_from_decode();
+						xed_instruction->encoder_set_iclass(XED_ICLASS_MOV);
+						xed_instruction->encoder_set_operand_order(1, XED_OPERAND_IMM0);
+						xed_instruction->encoder_set_uimm0(uimm, _reg.getSize());
 						xed_instruction->encode();
 					}
 				}
@@ -124,10 +122,10 @@ unsigned int apply_constant_folding(std::list<std::shared_ptr<x86_instruction>>&
 					{
 						// constant but what with flags
 						triton::uint64 uimm = triton_api->getConcreteMemoryValue(_mem).convert_to<triton::uint64>();
-						xed_instruction->init_from_decode();
-						xed_instruction->set_iclass(XED_ICLASS_MOV);
-						xed_instruction->set_operand_order(1, XED_OPERAND_IMM0);
-						xed_instruction->set_uimm0(uimm, _mem.getSize());
+						xed_instruction->encoder_init_from_decode();
+						xed_instruction->encoder_set_iclass(XED_ICLASS_MOV);
+						xed_instruction->encoder_set_operand_order(1, XED_OPERAND_IMM0);
+						xed_instruction->encoder_set_uimm0(uimm, _mem.getSize());
 						xed_instruction->encode();
 					}
 				}

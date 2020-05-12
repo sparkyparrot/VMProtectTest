@@ -212,21 +212,72 @@ public:
 	}
 
 	// encoder
-	inline void init_from_decode()
+	inline void encoder_init_from_decode()
 	{
 		xed_encoder_request_init_from_decode(this);
 	}
-	inline void set_iclass(xed_iclass_enum_t iclass)
+	inline void encoder_set_iclass(xed_iclass_enum_t iclass)
 	{
 		xed_encoder_request_set_iclass(this, iclass);
 	}
-	inline void set_operand_order(xed_uint_t i, xed_operand_enum_t name)
+	inline void encoder_set_operand_order(xed_uint_t i, xed_operand_enum_t name)
 	{
 		xed_encoder_request_set_operand_order(this, i, name);
 	}
-	inline void set_uimm0(xed_uint64_t uimm, xed_uint_t nbytes)
+
+	// mem
+	inline void encoder_set_memory_displacement(xed_int64_t memdisp, xed_uint_t nbytes)
+	{
+		xed_encoder_request_set_memory_displacement(this, memdisp, nbytes);
+	}
+	inline void encoder_set_agen()
+	{
+		xed_encoder_request_set_agen(this);
+	}
+	inline void encoder_set_mem0()
+	{
+		xed_encoder_request_set_mem0(this);
+	}
+	inline void encoder_set_mem1()
+	{
+		xed_encoder_request_set_mem1(this);
+	}
+	inline void encoder_set_memory_operand_length(xed_uint_t nbytes)
+	{
+		xed_encoder_request_set_memory_operand_length(this, nbytes);
+	}
+	inline void encoder_set_seg0(xed_reg_enum_t seg_reg)
+	{
+		xed_encoder_request_set_seg0(this, seg_reg);
+	}
+	inline void encoder_set_seg1(xed_reg_enum_t seg_reg)
+	{
+		xed_encoder_request_set_seg1(this, seg_reg);
+	}
+	inline void encoder_set_base0(xed_reg_enum_t base_reg)
+	{
+		xed_encoder_request_set_base0(this, base_reg);
+	}
+	inline void encoder_set_base1(xed_reg_enum_t base_reg)
+	{
+		xed_encoder_request_set_base1(this, base_reg);
+	}
+	inline void encoder_set_index(xed_reg_enum_t index_reg)
+	{
+		xed_encoder_request_set_index(this, index_reg);
+	}
+	inline void encoder_set_scale(xed_uint_t scale)
+	{
+		xed_encoder_request_set_scale(this, scale);
+	}
+	// imm
+	inline void encoder_set_uimm0(xed_uint64_t uimm, xed_uint_t nbytes)
 	{
 		xed_encoder_request_set_uimm0(this, uimm, nbytes);
+	}
+	inline void encoder_set_uimm0_bits(xed_uint64_t uimm, xed_uint_t nbits)
+	{
+		xed_encoder_request_set_uimm0_bits(this, uimm, nbits);
 	}
 	inline void encode()
 	{

@@ -207,6 +207,7 @@
     </ClCompile>
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ProcessStream.cpp" />
+    <ClCompile Include="test.cpp" />
     <ClCompile Include="VirtualMachine.cpp" />
     <ClCompile Include="VMHandler.cpp" />
     <ClCompile Include="VMProtectAnalyzer.cpp" />

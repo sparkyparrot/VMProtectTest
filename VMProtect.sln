@@ -12,6 +12,7 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{52DDFD95-50BD-4CC0-8A3D-6D14B525FFB5}"
 	ProjectSection(SolutionItems) = preProject
 		output = output
+		output2 = output2
 	EndProjectSection
 EndProject
 Global

@@ -174,6 +174,23 @@ void test_demo()
 
 
 
+extern void runtime_optimize(AbstractStream& stream);
+void t()
+{
+	DWORD processId = find_process(L"devirtualizeme32_vmp_3.0.9_v1.exe");
+	printf("pid: %08X\n", processId);
+
+	ProcessStream stream;
+	if (!stream.open(processId))
+		throw std::runtime_error("stream.open failed.");
+
+	runtime_optimize(stream);
+}
+
+
+
+
+
 int main()
 {
 	// Once, before using Intel XED, you must call xed_tables_init() to initialize the tables Intel XED uses for encoding and decoding:
@@ -182,7 +199,8 @@ int main()
 	try
 	{
 		//test_demo();
-		test_v1();
+		//test_v1();
+		t();
 	}
 	catch (const std::exception &ex)
 	{
