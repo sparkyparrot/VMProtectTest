@@ -609,7 +609,7 @@ std::shared_ptr<BasicBlock> make_cfg(AbstractStream& stream, unsigned long long 
 
 	// deobfuscate
 	constexpr bool _deobfuscate = 1;
-	constexpr bool _constant_folding = 1;
+	constexpr bool _constant_folding = 0;
 	if (_deobfuscate)
 	{
 		// how many times should i loop...

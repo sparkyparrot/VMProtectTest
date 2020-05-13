@@ -1070,7 +1070,7 @@ void VMProtectAnalyzer::check_store_access(triton::arch::Instruction &triton_ins
 
 void VMProtectAnalyzer::analyze_vm_handler(AbstractStream& stream, triton::uint64 handler_address)
 {
-	this->m_scratch_size = 0xC0; // test
+	//this->m_scratch_size = 0xC0; // test
 
 	// reset triton api
 	triton_api->clearCallbacks();
@@ -1216,7 +1216,7 @@ void VMProtectAnalyzer::analyze_vm_handler(AbstractStream& stream, triton::uint6
 					throw std::runtime_error("bluh");
 				}
 
-				triton::arch::MemoryAccess _mem(this->get_sp(), 4);
+				triton::arch::MemoryAccess _mem(this->get_sp(), triton_instruction.getType() == triton::arch::x86::ID_INS_PUSHFD ? 4 : 8);
 				auto _symvar = triton_api->symbolizeMemory(_mem);
 				context.expression_map[_symvar->getId()] = it->second;
 			}

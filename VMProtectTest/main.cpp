@@ -38,38 +38,7 @@ DWORD find_process(LPCTSTR processName)
 	return processId;
 }
 
-void test_x86_64()
-{
-	ProcessStream stream(true);
-	if (!stream.open(0x5b08))
-		throw std::runtime_error("stream.open failed.");
 
-	unsigned long long module_base = 0x140000000;
-	unsigned long long vmp0_address = 0x1C000;
-	unsigned long long vmp0_size = 0xE1F74;
-
-	VMProtectAnalyzer analyzer(triton::arch::ARCH_X86_64);
-	analyzer.load(stream, module_base, vmp0_address, vmp0_size);	// vmp0
-	analyzer.load(stream, module_base, 0x1B000, 0xA80);				// pdata
-
-	//analyzer.analyze_vm_enter(stream, 0x1400FD439);
-	//analyzer.analyze_vm_enter(stream, 0x1400FD443);
-	//analyzer.analyze_vm_enter(stream, 0x1400FD44D);
-	analyzer.analyze_vm_enter(stream, 0x1400FD457); // after messagebox
-
-	triton::uint64 handler_address = analyzer.get_ip();
-	while (handler_address)
-	{
-		std::cout << std::hex << handler_address << std::endl;
-		analyzer.analyze_vm_handler(stream, handler_address);
-		std::cout << std::endl << std::endl << std::endl << std::endl;
-		handler_address = analyzer.get_ip();
-	}
-
-	// idk
-	std::cout << std::endl << std::endl;
-	analyzer.print_output();
-}
 
 void vmp_ultimate()
 {
@@ -128,6 +97,37 @@ void test_v1()
 	}
 	analyzer.print_output();
 }
+void test_x86_64()
+{
+	DWORD processId = find_process(L"devirtualizeme64_vmp_3.0.9_v1.exe");
+	printf("pid: %08X\n", processId);
+
+	ProcessStream stream(true);
+	if (!stream.open(processId))
+		throw std::runtime_error("stream.open failed.");
+
+	unsigned long long module_base = 0x140000000ull;
+
+	VMProtectAnalyzer analyzer(triton::arch::ARCH_X86_64);
+	analyzer.load(stream, module_base, 0x1C000, 0xE1F74);		// vmp0
+	analyzer.load(stream, module_base, 0x1B000, 0xA80);			// pdata
+
+	//analyzer.analyze_vm_enter(stream, 0x1400FD439);
+	//analyzer.analyze_vm_enter(stream, 0x1400FD443);
+	analyzer.analyze_vm_enter(stream, 0x1400FD44D);
+	//analyzer.analyze_vm_enter(stream, 0x1400FD457ull); // after messagebox
+
+	triton::uint64 handler_address = analyzer.get_ip();
+	while (handler_address)
+	{
+		std::cout << "start analyzing " << std::hex << handler_address << "\n";
+		analyzer.analyze_vm_handler(stream, handler_address);
+		std::cout << "done.\n\n\n\n";
+		handler_address = analyzer.get_ip();
+	}
+	analyzer.print_output();
+}
+
 void test_demo()
 {
 	DWORD processId = find_process(L"Demo.vmp.exe");
@@ -178,7 +178,7 @@ extern void runtime_optimize(AbstractStream& stream,
 	triton::uint64 address, triton::uint64 module_base, triton::uint64 section_addr, triton::uint64 section_size);
 void t()
 {
-	constexpr bool x86_64 = false;
+	constexpr bool x86_64 = 1;
 	DWORD processId;
 	if (x86_64)
 		processId = find_process(L"devirtualizeme64_vmp_3.0.9_v1.exe");
@@ -209,7 +209,8 @@ int main()
 	{
 		//test_demo();
 		//test_v1();
-		t();
+		test_x86_64();
+		//t();
 	}
 	catch (const std::exception &ex)
 	{
