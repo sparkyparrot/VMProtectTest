@@ -16,6 +16,7 @@ public:
 
 	void decode(const void *buf, unsigned int length, 
 		xed_machine_mode_enum_t mmode, xed_address_width_enum_t stack_addr_width = XED_ADDRESS_WIDTH_32b);
+	void encode();
 
 	// xed functions
 	inline const char* get_name() const
@@ -278,15 +279,6 @@ public:
 	inline void encoder_set_uimm0_bits(xed_uint64_t uimm, xed_uint_t nbits)
 	{
 		xed_encoder_request_set_uimm0_bits(this, uimm, nbits);
-	}
-	inline void encode()
-	{
-		unsigned int olen;
-		unsigned char buf[16];
-		if (xed_encode(this, buf, 16, &olen) != XED_ERROR_NONE)
-			throw std::runtime_error("xed encode failed");
-
-		this->decode(buf, olen, XED_MACHINE_MODE_LEGACY_32);
 	}
 
 	// flags

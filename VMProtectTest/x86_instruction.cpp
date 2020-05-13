@@ -33,6 +33,68 @@ void x86_instruction::decode(const void* buf, unsigned int length,
 		}
 	}
 }
+void x86_instruction::encode()
+{
+	unsigned int olen;
+	unsigned char buf[16];
+	xed_error_enum_t xed_error = xed_encode(this, buf, 16, &olen);
+	switch (xed_error)
+	{
+		case XED_ERROR_NONE:				// OK
+		{
+			break;
+		}
+		default:
+		{
+			std::stringstream ss;
+			ss << "xed_encode err: " << xed_error_enum_t2str(xed_error);
+			throw std::runtime_error(ss.str());
+		}
+	}
+
+	xed_machine_mode_enum_t mmode;
+	xed_address_width_enum_t stack_addr_width;
+	switch (xed3_operand_get_mode(this))
+	{
+		case 0:
+		{
+			const xed_bits_t realmode = xed3_operand_get_realmode(this);
+			mmode = realmode ? XED_MACHINE_MODE_REAL_16 : XED_MACHINE_MODE_LONG_COMPAT_16;
+			break;
+		}
+		case 1:
+		{
+			const xed_bits_t realmode = xed3_operand_get_realmode(this);
+			mmode = realmode ? XED_MACHINE_MODE_REAL_32 : XED_MACHINE_MODE_LONG_COMPAT_32;
+			break;
+		}
+		case 2:
+		{
+			mmode = XED_MACHINE_MODE_LONG_64;
+			//stack_addr_width = XED_ADDRESS_WIDTH_64b;
+			break;
+		}
+		default:
+		{
+			throw std::runtime_error("xed mode error");
+			break;
+		}
+	}
+
+	switch (xed3_operand_get_smode(this))
+	{
+		case 0: stack_addr_width = XED_ADDRESS_WIDTH_16b; break;
+		case 1: stack_addr_width = XED_ADDRESS_WIDTH_32b; break;
+		case 2: stack_addr_width = XED_ADDRESS_WIDTH_64b; break;
+		default:
+		{
+			throw std::runtime_error("invalid smode");
+			break;
+		}
+	}
+
+	this->decode(buf, olen, mmode, stack_addr_width);
+}
 
 const x86_operand x86_instruction::get_operand(unsigned int i) const &
 {

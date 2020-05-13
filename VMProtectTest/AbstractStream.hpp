@@ -19,5 +19,7 @@ public:
 	virtual unsigned long long pos() = 0;
 	virtual void seek(unsigned long long pos) = 0;
 
+	bool is_x86_64() const { return this->m_x86_64; }
+
 	std::shared_ptr<x86_instruction> readNext();
 };

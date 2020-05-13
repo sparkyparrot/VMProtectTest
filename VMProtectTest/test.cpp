@@ -3,38 +3,39 @@
 #include "AbstractStream.hpp"
 #include "CFG.hpp"
 
-// global
-AbstractStream* g_stream = nullptr;
-auto module_base = 0x00400000;
-auto vmp0_address = 0x17000;
-auto vmp0_size = 0x86CB0;
-unsigned long long vmp_section_address = (module_base + vmp0_address);
-unsigned long long vmp_section_size = vmp0_size;
+// global, i mean... why can't triton have userdefined-context for callback functions?
+static AbstractStream* g_stream = nullptr;
+static triton::uint64 g_module_base = 0x00400000;
+static triton::uint64 g_vmp0_address = 0x17000;
+static triton::uint64 g_vmp0_size = 0x86CB0;
+static triton::uint64 g_vmp_section_address = (g_module_base + g_vmp0_address);
+static triton::uint64 g_vmp_section_size = g_vmp0_size;
 
 struct VMP_CPU_STATE
 {
 	triton::uint64 rbx, rsi, rdi, rbp, rsp;
+	bool x64;
 };
 
 // callbacks
 static void vm_enter_callback(triton::API& ctx, const triton::arch::MemoryAccess& mem)
 {
 	if (!ctx.isConcreteMemoryValueDefined(mem) &&
-		(vmp_section_address <= mem.getAddress() && mem.getAddress() < (vmp_section_address + vmp_section_size)))
+		(g_vmp_section_address <= mem.getAddress() && mem.getAddress() < (g_vmp_section_address + g_vmp_section_size)))
 	{
 		triton::uint8 buf[32];
 		g_stream->seek(mem.getAddress());
 		if (g_stream->read(buf, mem.getSize()) != mem.getSize())
 			throw std::runtime_error("stream.read failed");
 		
-		ctx.taintMemory(mem);
 		ctx.setConcreteMemoryAreaValue(mem.getAddress(), buf, mem.getSize());
+		ctx.taintMemory(mem);
 	}
 }
 static void vm_handler_callback(triton::API& ctx, const triton::arch::MemoryAccess& mem)
 {
 	if (!ctx.isConcreteMemoryValueDefined(mem) &&
-		(vmp_section_address <= mem.getAddress() && mem.getAddress() < (vmp_section_address + vmp_section_size)))
+		(g_vmp_section_address <= mem.getAddress() && mem.getAddress() < (g_vmp_section_address + g_vmp_section_size)))
 	{
 		triton::uint8 buf[32];
 		g_stream->seek(mem.getAddress());
@@ -43,18 +44,19 @@ static void vm_handler_callback(triton::API& ctx, const triton::arch::MemoryAcce
 
 		ctx.taintMemory(mem);
 		ctx.setConcreteMemoryAreaValue(mem.getAddress(), buf, mem.getSize());
-		return;
 	}
-
-	auto leaAst = mem.getLeaAst();
-	if (leaAst && leaAst->isSymbolized())
+	else
 	{
-		ctx.symbolizeMemory(mem);
+		auto leaAst = mem.getLeaAst();
+		if (leaAst && leaAst->isSymbolized())
+		{
+			ctx.symbolizeMemory(mem);
+		}
 	}
 }
 
 
-void _runtime_optimize(std::shared_ptr<triton::API> triton_api, AbstractStream& stream,
+static void _runtime_optimize(std::shared_ptr<triton::API> triton_api, AbstractStream& stream,
 	triton::uint64& runtime_address, VMP_CPU_STATE& cpu_state, std::list<std::shared_ptr<x86_instruction>>& instructions_o)
 {
 	std::list<std::shared_ptr<x86_instruction>> instructions;
@@ -104,9 +106,10 @@ void _runtime_optimize(std::shared_ptr<triton::API> triton_api, AbstractStream& 
 					new_mem.setScale(mem.getConstScale());
 				}
 
-				if (updated)
+				triton::arch::Immediate new_displacement(value, 4);
+				if (updated && value == new_displacement.getValue())
 				{
-					new_mem.setDisplacement({ value, displacement.getSize() });
+					new_mem.setDisplacement(new_displacement);
 					memory_replaceable.insert(std::make_pair(xed_instruction, new_mem));
 				}
 			}
@@ -194,11 +197,20 @@ void _runtime_optimize(std::shared_ptr<triton::API> triton_api, AbstractStream& 
 		}
 	}
 
+	// uh
+	const triton::arch::Register& bytecode_reg = cpu_state.x64 ? triton_api->registers.x86_rsi : triton_api->registers.x86_esi;
+	if (triton_api->isRegisterSymbolized(bytecode_reg))
+	{
+		std::cout << "control flow?" << std::endl;
+		getchar();
+	}
+
 	// replace
 	for (auto xed_instruction : instructions)
 	{
 		if (auto it = memory_replaceable.find(xed_instruction); it != memory_replaceable.end())
 		{
+			//std::cout << "memory_replaceable: " << xed_instruction->get_string() << "\n";
 			const triton::arch::MemoryAccess& mem = it->second;
 			if (xed_instruction->get_number_of_memory_operands() != 1)
 				throw std::runtime_error("there's too many or less memory operands");
@@ -208,22 +220,20 @@ void _runtime_optimize(std::shared_ptr<triton::API> triton_api, AbstractStream& 
 			if (!triton_api->isRegisterValid(mem.getConstBaseRegister()))
 			{
 				// remove
-				if (xed_instruction->get_operand(0).is_memory())
-					xed_instruction->encoder_set_base0(XED_REG_INVALID);
-				else
-					xed_instruction->encoder_set_base1(XED_REG_INVALID);
+				xed_instruction->encoder_set_base0(XED_REG_INVALID);
 			}
 			if (!triton_api->isRegisterValid(mem.getConstIndexRegister()))
 			{
 				// remove
 				xed_instruction->encoder_set_index(XED_REG_INVALID);
-				xed_instruction->encoder_set_scale(0);
+				//xed_instruction->encoder_set_scale(0);
 			}
 			xed_instruction->encode();
 		}
 
 		if (auto it = replaceable.find(xed_instruction); it != replaceable.end())
 		{
+			//std::cout << "replaceable: " << xed_instruction->get_string() << "\n";
 			switch (xed_instruction->get_iclass())
 			{
 				// unary
@@ -243,11 +253,14 @@ void _runtime_optimize(std::shared_ptr<triton::API> triton_api, AbstractStream& 
 				case XED_ICLASS_ROL:
 				case XED_ICLASS_ROR:
 				{
-					xed_instruction->encoder_init_from_decode();
-					xed_instruction->encoder_set_iclass(XED_ICLASS_MOV);
-					xed_instruction->encoder_set_operand_order(1, XED_OPERAND_IMM0);
-					xed_instruction->encoder_set_uimm0_bits(it->second, xed_instruction->get_operand_length_bits(0));
-					xed_instruction->encode();
+					if (!xed_instruction->get_operand(0).is_memory() || xed_instruction->get_operand_length_bits(0) <= 32)
+					{
+						xed_instruction->encoder_init_from_decode();
+						xed_instruction->encoder_set_iclass(XED_ICLASS_MOV);
+						xed_instruction->encoder_set_operand_order(1, XED_OPERAND_IMM0);
+						xed_instruction->encoder_set_uimm0_bits(it->second, xed_instruction->get_operand_length_bits(0));
+						xed_instruction->encode();
+					}
 					break;
 				}
 				case XED_ICLASS_LEA:
@@ -261,11 +274,15 @@ void _runtime_optimize(std::shared_ptr<triton::API> triton_api, AbstractStream& 
 				}
 				case XED_ICLASS_PUSH:
 				{
-					xed_instruction->encoder_init_from_decode();
-					xed_instruction->encoder_set_iclass(XED_ICLASS_PUSH);
-					xed_instruction->encoder_set_operand_order(0, XED_OPERAND_IMM0);
-					xed_instruction->encoder_set_uimm0_bits(it->second, xed_instruction->get_operand_length_bits(0));
-					xed_instruction->encode();
+					// there's no push imm64 :|
+					if (xed_instruction->get_operand_length_bits(0) <= 32)
+					{
+						xed_instruction->encoder_init_from_decode();
+						xed_instruction->encoder_set_iclass(XED_ICLASS_PUSH);
+						xed_instruction->encoder_set_operand_order(0, XED_OPERAND_IMM0);
+						xed_instruction->encoder_set_uimm0_bits(it->second, xed_instruction->get_operand_length_bits(0));
+						xed_instruction->encode();
+					}
 					break;
 				}
 				default:
@@ -283,7 +300,10 @@ void _runtime_optimize(std::shared_ptr<triton::API> triton_api, AbstractStream& 
 	std::vector<x86_register> dead_ =
 	{
 		XED_REG_RAX, XED_REG_RCX, XED_REG_RDX,
-		XED_REG_RBX, XED_REG_RSI, XED_REG_RDI
+		XED_REG_RBX, XED_REG_RSI, XED_REG_RDI,
+
+		XED_REG_R8, XED_REG_R9, XED_REG_R10, XED_REG_R11, 
+		XED_REG_R12, XED_REG_R13, XED_REG_R14, XED_REG_R15
 	};
 	for (int i = 0; i < dead_.size(); i++)
 	{
@@ -316,66 +336,124 @@ void _runtime_optimize(std::shared_ptr<triton::API> triton_api, AbstractStream& 
 			++it;
 	}
 
-	cpu_state.rbx = triton_api->getConcreteRegisterValue(triton_api->registers.x86_ebx).convert_to <triton::uint64>();
-	cpu_state.rsi = triton_api->getConcreteRegisterValue(triton_api->registers.x86_esi).convert_to <triton::uint64>();
-	cpu_state.rdi = triton_api->getConcreteRegisterValue(triton_api->registers.x86_edi).convert_to <triton::uint64>();
-	cpu_state.rbp = triton_api->getConcreteRegisterValue(triton_api->registers.x86_ebp).convert_to <triton::uint64>();
-	cpu_state.rsp = triton_api->getConcreteRegisterValue(triton_api->registers.x86_esp).convert_to <triton::uint64>();
+	if (cpu_state.x64)
+	{
+		cpu_state.rbx = triton_api->getConcreteRegisterValue(triton_api->registers.x86_rbx).convert_to <triton::uint64>();
+		cpu_state.rsi = triton_api->getConcreteRegisterValue(triton_api->registers.x86_rsi).convert_to <triton::uint64>();
+		cpu_state.rdi = triton_api->getConcreteRegisterValue(triton_api->registers.x86_rdi).convert_to <triton::uint64>();
+		cpu_state.rbp = triton_api->getConcreteRegisterValue(triton_api->registers.x86_rbp).convert_to <triton::uint64>();
+		cpu_state.rsp = triton_api->getConcreteRegisterValue(triton_api->registers.x86_rsp).convert_to <triton::uint64>();
+	}
+	else
+	{
+		cpu_state.rbx = triton_api->getConcreteRegisterValue(triton_api->registers.x86_ebx).convert_to <triton::uint64>();
+		cpu_state.rsi = triton_api->getConcreteRegisterValue(triton_api->registers.x86_esi).convert_to <triton::uint64>();
+		cpu_state.rdi = triton_api->getConcreteRegisterValue(triton_api->registers.x86_edi).convert_to <triton::uint64>();
+		cpu_state.rbp = triton_api->getConcreteRegisterValue(triton_api->registers.x86_ebp).convert_to <triton::uint64>();
+		cpu_state.rsp = triton_api->getConcreteRegisterValue(triton_api->registers.x86_esp).convert_to <triton::uint64>();
+	}
 	instructions_o.insert(instructions_o.end(), instructions.begin(), instructions.end());
 }
-void _runtime_optimize_enter(AbstractStream& stream,
+static void _runtime_optimize_enter(AbstractStream& stream,
 	triton::uint64& runtime_address, VMP_CPU_STATE& cpu_state, std::list<std::shared_ptr<x86_instruction>>& instructions_o)
 {
 	auto triton_api = std::make_shared<triton::API>();
-	triton_api->setArchitecture(triton::arch::ARCH_X86);
+	triton_api->setArchitecture(cpu_state.x64 ? triton::arch::ARCH_X86_64 : triton::arch::ARCH_X86);
 	triton_api->setAstRepresentationMode(triton::ast::representations::PYTHON_REPRESENTATION);
 	triton_api->addCallback(vm_enter_callback);
 
 	triton_api->setMode(triton::modes::TAINT_THROUGH_POINTERS, true);
 	triton_api->enableTaintEngine(true);
 
-	triton_api->symbolizeRegister(triton_api->registers.x86_eax);
-	triton_api->symbolizeRegister(triton_api->registers.x86_ebx);
-	triton_api->symbolizeRegister(triton_api->registers.x86_ecx);
-	triton_api->symbolizeRegister(triton_api->registers.x86_edx);
-	triton_api->symbolizeRegister(triton_api->registers.x86_edi);
-	triton_api->symbolizeRegister(triton_api->registers.x86_esi);
-	triton_api->symbolizeRegister(triton_api->registers.x86_ebp);
-	triton_api->symbolizeRegister(triton_api->registers.x86_eflags);
-	triton_api->symbolizeRegister(triton_api->registers.x86_esp);
+	if (cpu_state.x64)
+	{
+		triton_api->symbolizeRegister(triton_api->registers.x86_rax);
+		triton_api->symbolizeRegister(triton_api->registers.x86_rbx);
+		triton_api->symbolizeRegister(triton_api->registers.x86_rcx);
+		triton_api->symbolizeRegister(triton_api->registers.x86_rdx);
+		triton_api->symbolizeRegister(triton_api->registers.x86_rdi);
+		triton_api->symbolizeRegister(triton_api->registers.x86_rsi);
+		triton_api->symbolizeRegister(triton_api->registers.x86_rbp);
+		triton_api->symbolizeRegister(triton_api->registers.x86_eflags);
+		triton_api->symbolizeRegister(triton_api->registers.x86_rsp);
 
+		triton_api->symbolizeRegister(triton_api->registers.x86_r8);
+		triton_api->symbolizeRegister(triton_api->registers.x86_r9);
+		triton_api->symbolizeRegister(triton_api->registers.x86_r10);
+		triton_api->symbolizeRegister(triton_api->registers.x86_r11);
+		triton_api->symbolizeRegister(triton_api->registers.x86_r12);
+		triton_api->symbolizeRegister(triton_api->registers.x86_r13);
+		triton_api->symbolizeRegister(triton_api->registers.x86_r14);
+		triton_api->symbolizeRegister(triton_api->registers.x86_r15);
+	}
+	else
+	{
+		triton_api->symbolizeRegister(triton_api->registers.x86_eax);
+		triton_api->symbolizeRegister(triton_api->registers.x86_ebx);
+		triton_api->symbolizeRegister(triton_api->registers.x86_ecx);
+		triton_api->symbolizeRegister(triton_api->registers.x86_edx);
+		triton_api->symbolizeRegister(triton_api->registers.x86_edi);
+		triton_api->symbolizeRegister(triton_api->registers.x86_esi);
+		triton_api->symbolizeRegister(triton_api->registers.x86_ebp);
+		triton_api->symbolizeRegister(triton_api->registers.x86_eflags);
+		triton_api->symbolizeRegister(triton_api->registers.x86_esp);
+	}
 	_runtime_optimize(triton_api, stream, runtime_address, cpu_state, instructions_o);
 }
-void _runtime_optimize_handler(AbstractStream& stream,
+static void _runtime_optimize_handler(AbstractStream& stream,
 	triton::uint64 &runtime_address, VMP_CPU_STATE& cpu_state, std::list<std::shared_ptr<x86_instruction>>& instructions_o)
 {
 	auto triton_api = std::make_shared<triton::API>();
-	triton_api->setArchitecture(triton::arch::ARCH_X86);
+	triton_api->setArchitecture(cpu_state.x64 ? triton::arch::ARCH_X86_64 : triton::arch::ARCH_X86);
 	triton_api->setAstRepresentationMode(triton::ast::representations::PYTHON_REPRESENTATION);
 	triton_api->addCallback(vm_handler_callback);
 
 	triton_api->setMode(triton::modes::TAINT_THROUGH_POINTERS, true);
 	triton_api->enableTaintEngine(true);
+	if (cpu_state.x64)
+	{
+		triton_api->setConcreteRegisterValue(triton_api->registers.x86_rbx, cpu_state.rbx);
+		triton_api->setConcreteRegisterValue(triton_api->registers.x86_rsi, cpu_state.rsi);
+		triton_api->setConcreteRegisterValue(triton_api->registers.x86_rdi, cpu_state.rdi);
+		triton_api->setConcreteRegisterValue(triton_api->registers.x86_rbp, cpu_state.rbp);
+		triton_api->setConcreteRegisterValue(triton_api->registers.x86_rsp, cpu_state.rsp);
 
-	// non-const: esp, ebp
-	triton_api->setConcreteRegisterValue(triton_api->registers.x86_ebx, cpu_state.rbx);
-	triton_api->setConcreteRegisterValue(triton_api->registers.x86_esi, cpu_state.rsi);
-	triton_api->setConcreteRegisterValue(triton_api->registers.x86_edi, cpu_state.rdi);
-	triton_api->setConcreteRegisterValue(triton_api->registers.x86_ebp, cpu_state.rbp);
-	triton_api->setConcreteRegisterValue(triton_api->registers.x86_esp, cpu_state.rsp);
+		triton::uint64 arg0 = cpu_state.rbp;
+		triton_api->setConcreteMemoryAreaValue(cpu_state.rbp, (const triton::uint8*) & arg0, 8);
 
-	triton::uint64 arg0 = cpu_state.rbp;
-	triton_api->setConcreteMemoryAreaValue(cpu_state.rbp, (const triton::uint8*) &arg0, 8);
+		//triton_api->taintRegister(triton_api->registers.x86_esi);
+		triton_api->symbolizeRegister(triton_api->registers.x86_rbp);
+		triton_api->symbolizeRegister(triton_api->registers.x86_rsp);
+	}
+	else
+	{
+		// non-const: esp, ebp
+		triton_api->setConcreteRegisterValue(triton_api->registers.x86_ebx, cpu_state.rbx);
+		triton_api->setConcreteRegisterValue(triton_api->registers.x86_esi, cpu_state.rsi);
+		triton_api->setConcreteRegisterValue(triton_api->registers.x86_edi, cpu_state.rdi);
+		triton_api->setConcreteRegisterValue(triton_api->registers.x86_ebp, cpu_state.rbp);
+		triton_api->setConcreteRegisterValue(triton_api->registers.x86_esp, cpu_state.rsp);
 
-	//triton_api->taintRegister(triton_api->registers.x86_esi);
-	triton_api->symbolizeRegister(triton_api->registers.x86_ebp);
-	triton_api->symbolizeRegister(triton_api->registers.x86_esp);
+		triton::uint64 arg0 = cpu_state.rbp;
+		triton_api->setConcreteMemoryAreaValue(cpu_state.rbp, (const triton::uint8*) & arg0, 8);
 
+		//triton_api->taintRegister(triton_api->registers.x86_esi);
+		triton_api->symbolizeRegister(triton_api->registers.x86_ebp);
+		triton_api->symbolizeRegister(triton_api->registers.x86_esp);
+	}
 	_runtime_optimize(triton_api, stream, runtime_address, cpu_state, instructions_o);
 }
-void runtime_optimize(AbstractStream& stream)
+
+
+void runtime_optimize(AbstractStream& stream,
+	triton::uint64 address, triton::uint64 module_base, triton::uint64 section_addr, triton::uint64 section_size)
 {
 	g_stream = &stream;
+	g_module_base = module_base;
+	g_vmp0_address = section_addr;
+	g_vmp0_size = section_size;
+	g_vmp_section_address = g_module_base + g_vmp0_address;
+	g_vmp_section_size = g_vmp0_size;
 
 	std::list<std::shared_ptr<x86_instruction>> instructions;
 	auto print_and_clear = [&instructions]()
@@ -387,8 +465,9 @@ void runtime_optimize(AbstractStream& stream)
 		instructions.clear();
 	};
 
-	triton::uint64 runtime_address = 0x4312d7;
-	VMP_CPU_STATE cpu_state = { 0x00458B96, 0x0047FA63, 0x004892AF, 0x0019FCD4, 0x0019FC14 };
+	triton::uint64 runtime_address = address;
+	VMP_CPU_STATE cpu_state = {};
+	cpu_state.x64 = stream.is_x86_64();
 	_runtime_optimize_enter(stream, runtime_address, cpu_state, instructions);
 	print_and_clear();
 

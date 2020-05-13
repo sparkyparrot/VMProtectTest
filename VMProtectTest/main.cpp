@@ -174,17 +174,26 @@ void test_demo()
 
 
 
-extern void runtime_optimize(AbstractStream& stream);
+extern void runtime_optimize(AbstractStream& stream,
+	triton::uint64 address, triton::uint64 module_base, triton::uint64 section_addr, triton::uint64 section_size);
 void t()
 {
-	DWORD processId = find_process(L"devirtualizeme32_vmp_3.0.9_v1.exe");
+	constexpr bool x86_64 = false;
+	DWORD processId;
+	if (x86_64)
+		processId = find_process(L"devirtualizeme64_vmp_3.0.9_v1.exe");
+	else
+		processId = find_process(L"devirtualizeme32_vmp_3.0.9_v1.exe");
 	printf("pid: %08X\n", processId);
 
-	ProcessStream stream;
+	ProcessStream stream(x86_64);
 	if (!stream.open(processId))
 		throw std::runtime_error("stream.open failed.");
 
-	runtime_optimize(stream);
+	if (x86_64)
+		runtime_optimize(stream, 0x1400FD439ull, 0x140000000ull, 0x1B000, 0xA80);
+	else
+		runtime_optimize(stream, 0x4312d7, 0x00400000, 0x17000, 0x86CB0);
 }
 
 
