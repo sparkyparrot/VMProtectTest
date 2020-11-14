@@ -98,5 +98,8 @@
     <ClCompile Include="CFG.cpp">
       <Filter>cfg</Filter>
     </ClCompile>
+    <ClCompile Include="test.cpp">
+      <Filter>vmp</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

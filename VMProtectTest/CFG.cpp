@@ -4,8 +4,140 @@
 #include "AbstractStream.hpp"
 #include "x86_instruction.hpp"
 
-// deob
 // optimizations
+void _callback(triton::API& ctx, const triton::arch::MemoryAccess& mem)
+{
+	const triton::uint64 address = mem.getAddress();
+	if (ctx.isConcreteMemoryValueDefined(address, mem.getSize()))
+		return;
+
+	// unknown
+	ctx.symbolizeMemory(mem)->setAlias("unk");
+}
+unsigned int apply_constant_folding(std::list<std::shared_ptr<x86_instruction>>& instructions)
+{
+	unsigned int removed_bytes = 0;
+
+	auto triton_api = std::make_unique<triton::API>();
+	triton_api->setArchitecture(triton::arch::ARCH_X86);
+	triton_api->setMode(triton::modes::CONSTANT_FOLDING, true);
+	triton_api->setMode(triton::modes::ONLY_ON_SYMBOLIZED, true);
+	triton_api->setAstRepresentationMode(triton::ast::representations::PYTHON_REPRESENTATION);
+
+	triton_api->symbolizeRegister(triton_api->registers.x86_eax)->setAlias("eax");
+	triton_api->symbolizeRegister(triton_api->registers.x86_ebx)->setAlias("ebx");
+	triton_api->symbolizeRegister(triton_api->registers.x86_ecx)->setAlias("ecx");
+	triton_api->symbolizeRegister(triton_api->registers.x86_edx)->setAlias("edx");
+	triton_api->symbolizeRegister(triton_api->registers.x86_edi)->setAlias("edi");
+	triton_api->symbolizeRegister(triton_api->registers.x86_esi)->setAlias("esi");
+	triton_api->symbolizeRegister(triton_api->registers.x86_ebp)->setAlias("ebp");
+	triton_api->symbolizeRegister(triton_api->registers.x86_esp)->setAlias("esp");
+
+	triton_api->concretizeAllMemory();
+	triton_api->addCallback(_callback);
+
+	for (auto it = instructions.begin(); it != instructions.end(); ++it)
+	{
+		std::shared_ptr<x86_instruction> xed_instruction = *it;
+		const std::vector<xed_uint8_t> bytes = xed_instruction->get_bytes();
+
+		// fix ip
+		triton_api->setConcreteRegisterValue(triton_api->getCpuInstance()->getProgramCounter(), xed_instruction->get_addr());
+
+		// do stuff with triton
+		triton::arch::Instruction triton_instruction;
+		triton_instruction.setOpcode(&bytes[0], (triton::uint32)bytes.size());
+		triton_instruction.setAddress(xed_instruction->get_addr());
+		if (!triton_api->processing(triton_instruction))
+		{
+			throw std::runtime_error("triton processing failed");
+		}
+
+		switch (triton_instruction.getType())
+		{
+			case triton::arch::x86::ID_INS_PUSH:
+			{
+				// push reg -> push imm
+				auto& op0 = triton_instruction.operands[0];
+				if (op0.getType() == triton::arch::operand_e::OP_REG)
+				{
+					const auto& _reg = op0.getConstRegister();
+					if (!triton_api->isRegisterSymbolized(_reg))
+					{
+						// constant
+						triton::uint64 uimm = triton_api->getConcreteRegisterValue(_reg).convert_to<triton::uint64>();
+						xed_instruction->encoder_init_from_decode();
+						xed_instruction->encoder_set_operand_order(0, XED_OPERAND_IMM0);
+						xed_instruction->encoder_set_uimm0(uimm, _reg.getSize());
+						xed_instruction->encode();
+					}
+				}
+				else if (op0.getType() == triton::arch::operand_e::OP_MEM)
+				{
+					const auto& _mem = op0.getConstMemory();
+					if (!triton_api->isMemorySymbolized(_mem)
+						&& !_mem.getLeaAst()->isSymbolized())
+					{
+						// constant
+						triton::uint64 uimm = triton_api->getConcreteMemoryValue(_mem).convert_to<triton::uint64>();
+						xed_instruction->encoder_init_from_decode();
+						xed_instruction->encoder_set_operand_order(0, XED_OPERAND_IMM0);
+						xed_instruction->encoder_set_uimm0(uimm, _mem.getSize());
+						xed_instruction->encode();
+					}
+				}
+				break;
+			}
+			case triton::arch::x86::ID_INS_MOV:
+			case triton::arch::x86::ID_INS_ADD:
+			case triton::arch::x86::ID_INS_SUB:
+			case triton::arch::x86::ID_INS_XOR:
+			case triton::arch::x86::ID_INS_AND:
+			case triton::arch::x86::ID_INS_OR:
+			{
+				auto& op0 = triton_instruction.operands[0];
+				auto& op1 = triton_instruction.operands[1];
+				if (op0.getType() == triton::arch::operand_e::OP_REG
+					&& (triton_instruction.getType() != triton::arch::x86::ID_INS_MOV || op1.getType() != triton::arch::operand_e::OP_IMM))
+				{
+					// add reg, x -> mov reg, imm
+					const auto& _reg = op0.getConstRegister();
+					if (!triton_api->isRegisterSymbolized(_reg))
+					{
+						// constant but what with flags
+						triton::uint64 uimm = triton_api->getConcreteRegisterValue(_reg).convert_to<triton::uint64>();
+						xed_instruction->encoder_init_from_decode();
+						xed_instruction->encoder_set_iclass(XED_ICLASS_MOV);
+						xed_instruction->encoder_set_operand_order(1, XED_OPERAND_IMM0);
+						xed_instruction->encoder_set_uimm0(uimm, _reg.getSize());
+						xed_instruction->encode();
+					}
+				}
+				else if (op0.getType() == triton::arch::operand_e::OP_MEM
+					&& (triton_instruction.getType() != triton::arch::x86::ID_INS_MOV || op1.getType() != triton::arch::operand_e::OP_IMM))
+				{
+					// add mem, x -> mov reg, imm
+					const auto& _mem = op0.getConstMemory();
+					if (!triton_api->isMemorySymbolized(_mem))
+					{
+						// constant but what with flags
+						triton::uint64 uimm = triton_api->getConcreteMemoryValue(_mem).convert_to<triton::uint64>();
+						xed_instruction->encoder_init_from_decode();
+						xed_instruction->encoder_set_iclass(XED_ICLASS_MOV);
+						xed_instruction->encoder_set_operand_order(1, XED_OPERAND_IMM0);
+						xed_instruction->encoder_set_uimm0(uimm, _mem.getSize());
+						xed_instruction->encode();
+					}
+				}
+				break;
+			}
+			default:
+				break;
+		}
+	}
+
+	return 0;
+}
 unsigned int apply_dead_store_elimination(std::list<std::shared_ptr<x86_instruction>>& instructions,
 	std::map<x86_register, bool>& dead_registers, xed_uint32_t& dead_flags)
 {
@@ -262,14 +394,14 @@ bool isCall0(const std::shared_ptr<x86_instruction>& instruction)
 }
 
 //
-void identify_leaders_sub(AbstractStream& stream, unsigned long long leader,
-	std::set<unsigned long long>& leaders, std::list<std::pair<unsigned long long, unsigned long long>>& visit)
+void identify_leaders_sub(AbstractStream& stream, xed_uint64_t leader,
+	std::set<xed_uint64_t>& leaders, std::list<std::pair<xed_uint64_t, xed_uint64_t>>& visit)
 {
 	// The first instruction is a leader.
 	leaders.insert(leader);
 
 	// visit<start, end(include)>
-	auto is_visit = [&visit](unsigned long long address) -> bool
+	auto is_visit = [&visit](xed_uint64_t address) -> bool
 	{
 		for (const auto &pair : visit)
 		{
@@ -283,7 +415,7 @@ void identify_leaders_sub(AbstractStream& stream, unsigned long long leader,
 	};
 
 	// read one instruction
-	unsigned long long addr = leader;
+	xed_uint64_t addr = leader;
 	while (!is_visit(addr))
 	{
 		stream.seek(addr);
@@ -303,7 +435,7 @@ void identify_leaders_sub(AbstractStream& stream, unsigned long long leader,
 			case XED_CATEGORY_COND_BR:		// conditional branch
 			{
 				// The target of a conditional or an unconditional goto/jump instruction is a leader.
-				const unsigned long long target = instr->get_addr() + instr->get_length() + instr->get_branch_displacement();
+				const xed_uint64_t target = instr->get_addr() + instr->get_length() + instr->get_branch_displacement();
 				identify_leaders_sub(stream, target, leaders, visit);
 
 				// The instruction that immediately follows a conditional or an unconditional goto/jump instruction is a leader.
@@ -320,7 +452,7 @@ void identify_leaders_sub(AbstractStream& stream, unsigned long long leader,
 				}
 
 				// The target of a conditional or an unconditional goto/jump instruction is a leader.
-				const unsigned long long target = instr->get_addr() + instr->get_length() + instr->get_branch_displacement();
+				const xed_uint64_t target = instr->get_addr() + instr->get_length() + instr->get_branch_displacement();
 				identify_leaders_sub(stream, target, leaders, visit);
 				break;
 			}
@@ -336,7 +468,7 @@ void identify_leaders_sub(AbstractStream& stream, unsigned long long leader,
 				else
 				{
 					// call is considered as unconditional jump for VMP
-					const unsigned long long target = instr->get_addr() + instr->get_length() + instr->get_branch_displacement();
+					const xed_uint64_t target = instr->get_addr() + instr->get_length() + instr->get_branch_displacement();
 					identify_leaders_sub(stream, target, leaders, visit);
 				}
 				break;
@@ -359,12 +491,12 @@ void identify_leaders_sub(AbstractStream& stream, unsigned long long leader,
 }
 void identify_leaders(AbstractStream& stream, unsigned long long leader, std::set<unsigned long long>& leaders)
 {
-	std::list<std::pair<unsigned long long, unsigned long long>> visit;
+	std::list<std::pair<xed_uint64_t, xed_uint64_t>> visit;
 	identify_leaders_sub(stream, leader, leaders, visit);
 }
 
-std::shared_ptr<BasicBlock> make_basic_blocks(AbstractStream& stream, unsigned long long address,
-	const std::set<unsigned long long>& leaders, std::map<unsigned long long, std::shared_ptr<BasicBlock>>& basic_blocks)
+std::shared_ptr<BasicBlock> make_basic_blocks(AbstractStream& stream, xed_uint64_t address,
+	const std::set<xed_uint64_t>& leaders, std::map<xed_uint64_t, std::shared_ptr<BasicBlock>>& basic_blocks)
 {
 	// return basic block if it exists
 	auto it = basic_blocks.find(address);
@@ -383,7 +515,7 @@ std::shared_ptr<BasicBlock> make_basic_blocks(AbstractStream& stream, unsigned l
 	for (;;)
 	{
 		const std::shared_ptr<x86_instruction> instruction = stream.readNext();
-		unsigned long long next_address = instruction->get_addr();
+		xed_uint64_t next_address = instruction->get_addr();
 		if (!current_basic_block->instructions.empty() && leaders.count(next_address) > 0)
 		{
 			// make basic block with a leader
@@ -397,7 +529,7 @@ std::shared_ptr<BasicBlock> make_basic_blocks(AbstractStream& stream, unsigned l
 			case XED_CATEGORY_COND_BR:		// conditional branch
 			{
 				// follow jump
-				const unsigned long long target_address = instruction->get_addr() + instruction->get_length() + instruction->get_branch_displacement();
+				const xed_uint64_t target_address = instruction->get_addr() + instruction->get_length() + instruction->get_branch_displacement();
 				if (leaders.count(target_address) <= 0)
 				{
 					// should be "identify_leaders" bug
@@ -418,7 +550,7 @@ std::shared_ptr<BasicBlock> make_basic_blocks(AbstractStream& stream, unsigned l
 				}
 
 				// follow unconditional branch (target should be leader)
-				const unsigned long long target_address = instruction->get_addr() + instruction->get_length() + instruction->get_branch_displacement();
+				const xed_uint64_t target_address = instruction->get_addr() + instruction->get_length() + instruction->get_branch_displacement();
 				if (leaders.count(target_address) <= 0)
 				{
 					// should be "identify_leaders" bug
@@ -438,7 +570,7 @@ std::shared_ptr<BasicBlock> make_basic_blocks(AbstractStream& stream, unsigned l
 				else
 				{
 					// follow call
-					const unsigned long long target_address = instruction->get_addr() + instruction->get_length() + instruction->get_branch_displacement();
+					const xed_uint64_t target_address = instruction->get_addr() + instruction->get_length() + instruction->get_branch_displacement();
 					if (leaders.count(target_address) <= 0)
 					{
 						// should be "identify_leaders" bug
@@ -468,31 +600,110 @@ return_basic_block:
 std::shared_ptr<BasicBlock> make_cfg(AbstractStream& stream, unsigned long long address)
 {
 	// identify leaders
-	std::set<unsigned long long> leaders;
+	std::set<xed_uint64_t> leaders;
 	identify_leaders(stream, address, leaders);
 
 	// make basic blocks
-	std::map<unsigned long long, std::shared_ptr<BasicBlock>> basic_blocks;
+	std::map<xed_uint64_t, std::shared_ptr<BasicBlock>> basic_blocks;
 	std::shared_ptr<BasicBlock> first_basic_block = make_basic_blocks(stream, address, leaders, basic_blocks);
 
 	// deobfuscate
 	constexpr bool _deobfuscate = 1;
+	constexpr bool _constant_folding = 0;
 	if (_deobfuscate)
 	{
-		// can possibly improve by checking dead_registers/flags after deobfuscate
-		unsigned int removed_bytes;
-		/*
-		do
-		{
-			removed_bytes = 0;
-			for (auto& pair : basic_blocks)
-				removed_bytes += deobfuscate_basic_block(pair.second);
-		} while (removed_bytes);*/
+		// how many times should i loop...
 		for (int i = 0; i < 10; i++)
 		{
-			removed_bytes = 0;
+			// can possibly improve by checking dead_registers/flags after deobfuscate
+			unsigned int removed_bytes = 0;
 			for (auto it = basic_blocks.rbegin(); it != basic_blocks.rend(); ++it)
+			{
 				removed_bytes += deobfuscate_basic_block(it->second);
+			}
+
+			// reconstruct cfg, messy buf who cares...
+			std::multiset<xed_uint64_t> refcount;
+			std::function<void(std::shared_ptr<BasicBlock>)> get_ref_count = [&get_ref_count, &refcount](std::shared_ptr<BasicBlock> bb)
+			{
+				if (bb->next_basic_block)
+				{
+					const auto leader = bb->next_basic_block->leader;
+					refcount.insert(leader);
+					if (refcount.count(leader) == 1)
+						get_ref_count(bb->next_basic_block);
+				}
+				if (bb->target_basic_block)
+				{
+					const auto leader = bb->target_basic_block->leader;
+					refcount.insert(leader);
+					if (refcount.count(leader) == 1)
+						get_ref_count(bb->target_basic_block);
+				}
+			};
+			get_ref_count(first_basic_block);
+
+			auto bb = first_basic_block;
+			while (bb)
+			{
+				if (bb->next_basic_block
+					&& !bb->target_basic_block
+					&& refcount.count(bb->next_basic_block->leader) == 1)
+				{
+					// combine them
+					auto next_basic_block = bb->next_basic_block;
+					bb->instructions.insert(bb->instructions.end(),
+						next_basic_block->instructions.begin(), next_basic_block->instructions.end());
+
+					bb->terminator = next_basic_block->terminator;
+					bb->next_basic_block = next_basic_block->next_basic_block;
+					bb->target_basic_block = next_basic_block->target_basic_block;
+
+					refcount.erase(next_basic_block->leader);
+					basic_blocks.erase(next_basic_block->leader);
+				}
+				else if (!bb->next_basic_block 
+					&& bb->target_basic_block 
+					&& refcount.count(bb->target_basic_block->leader) == 1)
+				{
+					// combine them
+					auto target_basic_block = bb->target_basic_block;
+
+					// pop last instruction if jmp
+					const auto& instr = bb->instructions.back();
+					if (instr->get_iclass() == XED_ICLASS_JMP)
+						bb->instructions.pop_back();
+
+					// copy
+					bb->instructions.insert(bb->instructions.end(),
+						target_basic_block->instructions.begin(), target_basic_block->instructions.end());
+					bb->terminator = target_basic_block->terminator;
+					bb->next_basic_block = target_basic_block->next_basic_block;
+					bb->target_basic_block = target_basic_block->target_basic_block;
+
+					// deref
+					refcount.erase(target_basic_block->leader);
+					basic_blocks.erase(target_basic_block->leader);
+				}
+				else if (bb->next_basic_block)
+				{
+					// what if basicblock has 2 path tho
+					bb = bb->next_basic_block;
+				}
+				else
+				{
+					bb = bb->target_basic_block;
+				}
+			}
+
+			if (_constant_folding)
+			{
+				for (auto it = basic_blocks.rbegin(); it != basic_blocks.rend(); ++it)
+				{
+					// triton slow maybe?
+					apply_constant_folding(it->second->instructions);
+				}
+			}
 		}
 	}
 	return first_basic_block;
